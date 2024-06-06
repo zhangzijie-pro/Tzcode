@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.main-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-section {
+    flex: 2;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.bottom-section {
+    flex: 1;
+    background-color: #252526;
+    color: white;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 5%;
+}
+
+li {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.directory {
+    font-weight: bold;
+}
+
+.file {
+    padding-left: 20px;
+}
+
+/* termial */
+.output {
+    margin-bottom: 10px;
+  }
+  .input-line {
+    display: flex;
+    align-items: center;
+  }
+  .prompt {
+    color: green;
+  }
+  input {
+    background-color: #252526;
+    color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 5px;
+  }
+  .word-size{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14;
+    font-weight: normal;
+    letter-spacing: 1;
+    line-height: 1.2;
+    zoom: 1;
+    scrollbar-width: 10000;
+    white-space: normal;
+  }
+
+/* Make font size responsive */
+.sidebar, .main-content {
+    font-size: calc(10px + 0.5vw);
+}
+
+.collapsed > ul {
+    display: none;
+}
+
+/* menu */
+.menu-bar {
+    display: flex;
+    background-color: #333;
+
+}
+
+.menu-bar button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+.menu-bar button:hover {
+    background-color: #444;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: #333;
+    border: 1px solid #444;
+    z-index: 1000;
+}
+.submenu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: none;
+    color: #fff;
+    text-align: left;
+}
+.submenu button:hover {
+    background-color: #555;
+}
