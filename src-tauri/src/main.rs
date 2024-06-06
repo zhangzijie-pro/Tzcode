@@ -6,6 +6,7 @@ use std::fs::File;
 use std::io::Read;
 use tauri::{command, generate_context, generate_handler};
 use ansi_to_html::convert;
+use tiks_command::{pwd, run::run, whoami, SESSION};
 
 // 读取目录内容
 #[command]
@@ -42,7 +43,7 @@ fn write_file(path: String, contents: String) -> Result<(), String> {
   fs::write(&path, contents).map_err(|e| e.to_string())
 }
 
-/*#[command]
+#[command]
 fn whoami_tauri() -> String{
   let mut session_lock = SESSION.lock().unwrap();
   let session = &mut *session_lock;
@@ -58,15 +59,17 @@ fn pwd_tauri() -> String{
 fn run_command(command: String) -> String {
   let commands: Vec<&str> = command.split_whitespace().collect();
   let commands_string: Vec<String> = commands.iter().map(|x| x.to_string()).collect();
-  let res = run(commands_string, &mut SessionContext::new());
+  let mut session_lock = SESSION.lock().unwrap();
+  let session = &mut *session_lock;
+  let (_code,res) = run(commands_string, session);
   let mut html_output = convert(&res).expect("Can't INTO");
   html_output = html_output.replace("\n", "<br>");
   html_output
-}*/
+}
 
 fn main() {
   tauri::Builder::default()
-      .invoke_handler(generate_handler![read_directory, read_file, write_file])
+      .invoke_handler(generate_handler![read_directory, read_file, write_file,whoami_tauri,pwd_tauri,run_command])
       .run(generate_context!())
       .expect("error while running tauri application");
 }

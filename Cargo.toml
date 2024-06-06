@@ -1,6 +1,6 @@
 [workspace]
 
-members = ["command","src-tauri"]
+members = ["tiks_command","src-tauri"]
 resolver = "2"
 
 
