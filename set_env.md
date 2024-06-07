@@ -4,11 +4,11 @@
 
 **C++下载**
 
-![**C++下载**](./img/install-c.png)
+![C++下载](./img/install-c.png)
 
 **vscode 扩展**
 
-![**vscode 扩展**](./img/vscode_ex.png)
+![vscode 扩展](./img/vscode_ex.png)
 
 ## Rust 安装工具
 
@@ -20,6 +20,8 @@
 
 
 ## Tauri下载
+
+### 详见[文档](https://tauri.app/zh-cn/v1/guides/getting-started/setup/html-css-js)
 
 ```sh
 Cargo下载: 

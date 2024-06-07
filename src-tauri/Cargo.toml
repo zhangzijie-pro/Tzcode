@@ -1,9 +1,9 @@
 [package]
 name = "app"
 version = "0.1.0"
-description = "A Tauri App"
+description = "Tzdoe"
 authors = ["Zhangzijie <zzj01262022@163.com>"]
-repository = "https://github.com/zhangzijie-pro/Tiks.git"
+repository = "https://github.com/zhangzijie-pro/Tzcode.git"
 license = "MIT"
 default-run = "app"
 edition = "2021"

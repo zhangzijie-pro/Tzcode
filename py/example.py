@@ -1,0 +1,2 @@
+def example(thing):
+    pass

@@ -7,7 +7,6 @@ resolver = "2"
 [profile.dev]
 panic = "abort"
 
-
 [profile.release]
 opt-level = "z"     # Optimize for size.
 lto = true          # Enable Link Time Optimization

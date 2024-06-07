@@ -234,7 +234,7 @@ lazy_static!{
 #[cfg(target_os="linux")]
 fn init_setup_linux(){
     Command::new("bash")
-    .arg("./mac_linux/setup.sh")
+    .arg("./sh/mac_linux/setup.sh")
     .spawn()
     .expect("Error: Can't setup");
 }
@@ -242,14 +242,14 @@ fn init_setup_linux(){
 #[cfg(target_os="macos")]
 fn init_setup_mac() {
     Command::new("bash")
-        .arg("./mac_linux/setup.sh")
+        .arg("./sh/mac_linux/setup.sh")
         .spawn()
         .expect("Error: Can't setup on macOS");
 }
 
 #[cfg(target_os="windows")]
 fn init_setup_windows() {
-    Command::new("./window/setup.bat")
+    Command::new("./sh/window/setup.bat")
         .spawn()
         .expect("Error: Can't setup on Windows");
 }

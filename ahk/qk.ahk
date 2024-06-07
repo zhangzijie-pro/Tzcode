@@ -1,0 +1,2 @@
+#SingleInstance, Force
+MsgBox, "example"
