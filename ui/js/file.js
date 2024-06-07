@@ -1,9 +1,14 @@
-// 文件管理
 const { invoke } = window.__TAURI__.tauri;
-    let currentPath = '.';
+document.addEventListener('DOMContentLoaded', () => {
+    const { invoke } = window.__TAURI__.tauri;
+    const tabContainer = document.querySelector('.tab-container');
+    const fileContentContainer = document.querySelector('.file-content-container');
+    const initialPage = document.querySelector('.initial-page');
+    let currentPath = 'C:/Users/lenovo/Desktop/rust';
+    let openFiles = {};
 
-    // path = " ? "  = open file -> ?
-    async function fetchFiles(path = 'C:/Users/lenovo/Desktop/rust', parentElement = null) {
+    // Function to fetch and display files in the sidebar
+    async function fetchFiles(path = ' ', parentElement = null) {
         try {
             const files = await invoke('read_directory', { path });
             const ulElement = document.createElement('ul');
@@ -44,19 +49,113 @@ const { invoke } = window.__TAURI__.tauri;
         }
     }
 
+    // Function to open a file and create a tab
     async function openFile(path) {
         try {
             const contents = await invoke('read_file', { path });
-            document.getElementById('fileContent').value = contents;
-            document.getElementById('fileContent').dataset.path = path;
+            createTab(path, contents);
         } catch (error) {
             console.error('Error opening file:', error);
         }
     }
 
+    // Function to extract filename from full path
+    function extractFilename(path) {
+        return path.split('/').pop().split('\\').pop();
+    }
+
+    // Function to create a new tab
+    function createTab(path, content = '') {
+        const filename = extractFilename(path);
+
+        if (openFiles[filename]) {
+            switchTab(filename);
+            return;
+        }
+
+        const tab = document.createElement('div');
+        tab.className = 'tab';
+        tab.innerText = filename;
+        tab.dataset.filename = filename;
+        tab.dataset.fullPath = path;
+        tab.addEventListener('click', () => switchTab(filename));
+        
+        const closeButton = document.createElement('span');
+        closeButton.innerText = ' x';
+        closeButton.style.marginLeft = '10px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeTab(filename);
+        });
+        tab.appendChild(closeButton);
+
+        tabContainer.appendChild(tab);
+
+        const textarea = document.createElement('textarea');
+        textarea.className = 'file-content';
+        textarea.value = content;
+        textarea.style.display = 'none';
+        fileContentContainer.appendChild(textarea);
+
+        openFiles[filename] = { tab, textarea };
+
+        switchTab(filename);
+        hideInitialPage();
+    }
+
+    // Function to switch to an active tab
+    function switchTab(filename) {
+        for (const [file, { tab, textarea }] of Object.entries(openFiles)) {
+            if (file === filename) {
+                tab.classList.add('active');
+                textarea.style.display = 'block';
+            } else {
+                tab.classList.remove('active');
+                textarea.style.display = 'none';
+            }
+        }
+    }
+
+    // Function to close a tab
+    function closeTab(filename) {
+        if (openFiles[filename]) {
+            const { tab, textarea } = openFiles[filename];
+            tab.remove();
+            textarea.remove();
+            delete openFiles[filename];
+
+            // Switch to another open tab if any
+            const remainingFiles = Object.keys(openFiles);
+            if (remainingFiles.length > 0) {
+                switchTab(remainingFiles[0]);
+            } else {
+                showInitialPage();
+            }
+        }
+    }
+
+    // Function to hide the initial page
+    function hideInitialPage() {
+        initialPage.style.display = 'none';
+    }
+
+    // Function to show the initial page
+    function showInitialPage() {
+        initialPage.style.display = 'flex';
+    }
+
+    // Function to save the current file
     async function saveFile() {
-        const path = document.getElementById('fileContent').dataset.path;
-        const contents = document.getElementById('fileContent').value;
+        const activeTab = document.querySelector('.tab.active');
+        if (!activeTab) {
+            alert('No file is open!');
+            return;
+        }
+
+        const filename = activeTab.dataset.filename;
+        const path = openFiles[filename].tab.dataset.fullPath;
+        const contents = openFiles[filename].textarea.value;
         try {
             await invoke('write_file', { path, contents });
             alert('File saved successfully!');
@@ -65,83 +164,7 @@ const { invoke } = window.__TAURI__.tauri;
             alert('Failed to save file!');
         }
     }
-    
 
-    // ~menu~
-    function toggleSubmenu(buttonId, submenuId) {
-        const button = document.getElementById(buttonId);
-        const submenu = document.getElementById(submenuId);
-
-        button.addEventListener('click', function(event) {
-            event.stopPropagation();
-            // Close other submenus
-            document.querySelectorAll('.submenu').forEach(sub => {
-                if (sub !== submenu) sub.style.display = 'none';
-            });
-            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Close submenu when clicking outside
-        document.addEventListener('click', function() {
-            submenu.style.display = 'none';
-        });
-
-        submenu.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-    }
-
-    // Set up menu buttons
-    toggleSubmenu('fileButton', 'fileSubmenu');
-    toggleSubmenu('editButton', 'editSubmenu');
-    toggleSubmenu('languageButton', 'languageSubmenu');
-
-    // Set up submenu button events
-    document.getElementById('newFileButton').addEventListener('click', function() {
-        alert('新建文件');
-        // Add your logic here
-    });
-
-    document.getElementById('openFileButton').addEventListener('click', function() {
-        alert('打开文件');
-        // Add your logic here
-    });
-
-    document.getElementById('saveFileButton').addEventListener('click', function() {
-        alert('保存文件');
-        // Add your logic here
-    });
-
-    document.getElementById('undoButton').addEventListener('click', function() {
-        alert('撤销');
-        // Add your logic here
-    });
-
-    document.getElementById('redoButton').addEventListener('click', function() {
-        alert('重做');
-        // Add your logic here
-    });
-
-    document.getElementById('copyButton').addEventListener('click', function() {
-        alert('复制');
-        // Add your logic here
-    });
-
-    document.getElementById('javascriptButton').addEventListener('click', function() {
-        alert('JavaScript');
-        // Add your logic here
-    });
-
-    document.getElementById('pythonButton').addEventListener('click', function() {
-        alert('Python');
-        // Add your logic here
-    });
-
-    document.getElementById('rustButton').addEventListener('click', function() {
-        alert('Rust');
-        // Add your logic here
-    });
-
-
-    // Initial fetch of files
-    fetchFiles();
+    // Initialize file fetching
+    fetchFiles(currentPath);
+});

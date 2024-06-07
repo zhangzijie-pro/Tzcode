@@ -1,0 +1,39 @@
+/* termial */
+.output {
+    margin-bottom: 10px;
+  }
+  .input-line {
+    display: flex;
+    align-items: center;
+  }
+  .prompt {
+    color: green;
+  }
+  input {
+    background-color: #252526;
+    color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 5px;
+  }
+  .word-size{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14;
+    font-weight: normal;
+    letter-spacing: 1;
+    line-height: 1.2;
+    zoom: 1;
+    scrollbar-width: 10000;
+    white-space: normal;
+    font-size: small;
+  }
+
+/* Make font size responsive */
+.sidebar, .main-content {
+    font-size: calc(10px + 0.5vw);
+}
+
+.collapsed > ul {
+    display: none;
+}
