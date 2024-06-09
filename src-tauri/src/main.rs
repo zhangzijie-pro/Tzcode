@@ -4,7 +4,7 @@
 use std::fs;
 use std::fs::File;
 use std::io::Read;
-use tauri::{command, generate_context, generate_handler};
+use tauri::{command, generate_context, generate_handler, Menu, MenuItem, Submenu};
 use ansi_to_html::convert;
 use tiks_command::{pwd, run::run, whoami, SESSION};
 
@@ -68,8 +68,11 @@ fn run_command(command: String) -> String {
 }
 
 fn main() {
+  let submenu = Submenu::new("Actions", Menu::new());
+  let menu = Menu::new().add_submenu(submenu.clone()).add_native_item(MenuItem::Copy).add_submenu(submenu);
   tauri::Builder::default()
-      .invoke_handler(generate_handler![read_directory, read_file, write_file,whoami_tauri,pwd_tauri,run_command])
-      .run(generate_context!())
-      .expect("error while running tauri application");
+    .menu(menu)
+    .invoke_handler(generate_handler![read_directory, read_file, write_file,whoami_tauri,pwd_tauri,run_command])
+    .run(generate_context!())
+    .expect("error while running tauri application");
 }

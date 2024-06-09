@@ -5,35 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tzcode</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/codeEditor.css">
     <link rel="stylesheet" href="./css/dir.css">
     <link rel="stylesheet" href="./css/terimal.css">
     <link rel="stylesheet" href="./css/menu.css">
 </head>
 <body>
-    <div class="menu-bar">
-        <button id="fileButton">文件</button>
-        <div id="fileSubmenu" class="submenu">
-            <button id="newFileButton">新建文件</button>
-            <button id="openFileButton">打开文件</button>
-            <button id="saveFileButton">保存文件</button>
-        </div>
-        <button id="editButton">编辑</button>
-        <div id="editSubmenu" class="submenu">
-            <button id="undoButton">撤销</button>
-            <button id="redoButton">重做</button>
-            <button id="copyButton">复制</button>
-        </div>
-        <button id="languageButton">语言</button>
-        <div id="languageSubmenu" class="submenu">
-            <button id="javascriptButton">JavaScript</button>
-            <button id="pythonButton">Python</button>
-            <button id="rustButton">Rust</button>
-        </div>
-        <button id="viewButton">视图</button>
-        <button id="helpButton">帮助</button>
-    </div>
     <div class="container">
-        <!--menu-->
         <div class="sidebar" id="sidebar">
             <ul id="fileList" class="file-size">
                 <!-- Files will be populated here -->
@@ -41,7 +19,6 @@
         </div>
         <div class="main-content">
             <div class="top-section">
-                <h2>Editor - Top Section</h2>
                 <div class="initial-page">
                     <h2>Welcome to Tzcode</h2>
                     <img src="../src-tauri/icons/icon.ico" alt="Logo">

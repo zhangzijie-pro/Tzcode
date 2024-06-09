@@ -1,13 +1,11 @@
 const { invoke } = window.__TAURI__.tauri;
 document.addEventListener('DOMContentLoaded', () => {
-    const { invoke } = window.__TAURI__.tauri;
     const tabContainer = document.querySelector('.tab-container');
     const fileContentContainer = document.querySelector('.file-content-container');
     const initialPage = document.querySelector('.initial-page');
     let currentPath = 'C:/Users/lenovo/Desktop/rust';
     let openFiles = {};
 
-    // Function to fetch and display files in the sidebar
     async function fetchFiles(path = ' ', parentElement = null) {
         try {
             const files = await invoke('read_directory', { path });
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to open a file and create a tab
     async function openFile(path) {
         try {
             const contents = await invoke('read_file', { path });
@@ -59,12 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to extract filename from full path
     function extractFilename(path) {
         return path.split('/').pop().split('\\').pop();
     }
 
-    // Function to create a new tab
     function createTab(path, content = '') {
         const filename = extractFilename(path);
 
@@ -79,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tab.dataset.filename = filename;
         tab.dataset.fullPath = path;
         tab.addEventListener('click', () => switchTab(filename));
-        
+
         const closeButton = document.createElement('span');
         closeButton.innerText = ' x';
         closeButton.style.marginLeft = '10px';
@@ -92,40 +87,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tabContainer.appendChild(tab);
 
+        const lineNumbers = document.createElement('div');
+        lineNumbers.className = 'line-numbers';
+        const spanElement = document.createElement('span');
+        lineNumbers.appendChild(spanElement);
         const textarea = document.createElement('textarea');
         textarea.className = 'file-content';
         textarea.value = content;
-        textarea.style.display = 'none';
-        fileContentContainer.appendChild(textarea);
 
-        openFiles[filename] = { tab, textarea };
+        const container = document.createElement('div');
+        container.className = 'editor';
+        container.appendChild(lineNumbers);
+        container.appendChild(textarea);
+        fileContentContainer.appendChild(container);
+
+        openFiles[filename] = { tab, textarea, lineNumbers, container };
+
+        textarea.addEventListener('keyup', () => {
+            const numberOfLines = textarea.value.split('\n').length;
+            lineNumbers.innerHTML = Array(numberOfLines)
+                .fill('<span></span>')
+                .join('');
+        });
+
+        textarea.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+
+                textarea.value = textarea.value.substring(0, start) + '\t' + textarea.value.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start + 1;
+
+                event.preventDefault();
+            }
+        });
 
         switchTab(filename);
         hideInitialPage();
     }
 
-    // Function to switch to an active tab
     function switchTab(filename) {
-        for (const [file, { tab, textarea }] of Object.entries(openFiles)) {
-            if (file === filename) {
+        for (const { tab, textarea, lineNumbers, container } of Object.values(openFiles)) {
+            if (tab.dataset.filename === filename) {
                 tab.classList.add('active');
-                textarea.style.display = 'block';
+                container.classList.add('active');
+                const numberOfLines = textarea.value.split('\n').length;
+                lineNumbers.innerHTML = Array(numberOfLines)
+                    .fill('<span></span>')
+                    .join('');
             } else {
                 tab.classList.remove('active');
-                textarea.style.display = 'none';
+                container.classList.remove('active');
             }
         }
     }
 
-    // Function to close a tab
     function closeTab(filename) {
         if (openFiles[filename]) {
-            const { tab, textarea } = openFiles[filename];
+            const { tab, textarea, lineNumbers, container } = openFiles[filename];
             tab.remove();
-            textarea.remove();
+            container.remove();
             delete openFiles[filename];
 
-            // Switch to another open tab if any
             const remainingFiles = Object.keys(openFiles);
             if (remainingFiles.length > 0) {
                 switchTab(remainingFiles[0]);
@@ -135,36 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Function to hide the initial page
     function hideInitialPage() {
         initialPage.style.display = 'none';
     }
 
-    // Function to show the initial page
     function showInitialPage() {
         initialPage.style.display = 'flex';
     }
 
-    // Function to save the current file
-    async function saveFile() {
-        const activeTab = document.querySelector('.tab.active');
-        if (!activeTab) {
-            alert('No file is open!');
-            return;
-        }
-
-        const filename = activeTab.dataset.filename;
-        const path = openFiles[filename].tab.dataset.fullPath;
-        const contents = openFiles[filename].textarea.value;
-        try {
-            await invoke('write_file', { path, contents });
-            alert('File saved successfully!');
-        } catch (error) {
-            console.error('Error saving file:', error);
-            alert('Failed to save file!');
-        }
-    }
-
-    // Initialize file fetching
     fetchFiles(currentPath);
 });

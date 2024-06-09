@@ -1,0 +1,90 @@
+.tab {
+    padding: 5px 10px;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #333;
+    border-bottom: none;
+    margin-right: 2px;
+}
+
+.tab.active {
+    background-color: #1e1e1e;
+    border-bottom: 1px solid #1e1e1e;
+}
+
+.line-numbers {
+    width: 20px;
+    text-align: left;
+}
+
+.line-numbers span {
+    counter-increment: linenumber;
+}
+
+.line-numbers span::before {
+    content: counter(linenumber);
+    display: block;
+    color: #506882;
+    font-size: smaller;
+}
+
+.editor {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+    gap: 20px;
+    font-family: monospace;
+    line-height: 21px;
+    background: #1e1e1e;
+    border-radius: 2px;
+    padding: 20px 10px;
+}
+
+.editor.active{
+    display: flex;
+}
+
+.file-content-container {
+    height: calc(100vh - 50px);
+    width: 100%;
+    position: relative;
+}
+
+.file-content{
+    width: 12%;
+    height: 100%;
+    border: none;
+    line-height: unset;
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+textarea {
+    overflow-y: hidden;
+    padding: 0;
+    border: 0;
+    background: #1e1e1e;
+    color: #FFF;
+    min-width: 500px;
+    outline: none;
+    resize: none;
+    height: auto;
+}
+
+.initial-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.initial-page img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+}

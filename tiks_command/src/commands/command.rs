@@ -70,6 +70,7 @@ pub fn ls() -> io::Result<(usize,String)> {
 
 // ll
 #[allow(unused_assignments)]
+#[allow(unused_variables)]
 #[allow(unused_mut)]
 pub fn ll(context: &SessionContext) -> io::Result<(usize,String)>{
     let dir_path = Path::new("./");

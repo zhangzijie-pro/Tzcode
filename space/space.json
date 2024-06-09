@@ -1,0 +1,20 @@
+{
+    "workspace": {
+        "back-color": "black",
+        "font-family": "Arial, sans-serif"
+    },
+    "dir": {
+        "background-color": "#1e1e1e",
+        "width": "20%"
+    },
+    "cli": {
+        "flex-size": "9",
+        "background-color": "#252526",
+        "color": "white"
+    },
+    "top-w": {
+        "flex-size":"0.9",
+        "background-color":"#252526",
+        "color": "white"
+    }
+}
