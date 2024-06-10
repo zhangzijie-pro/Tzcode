@@ -94,20 +94,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const textarea = document.createElement('textarea');
         textarea.className = 'file-content';
         textarea.value = content;
-
+        textarea.id = 'code-input';
         const container = document.createElement('div');
         container.className = 'editor';
         container.appendChild(lineNumbers);
         container.appendChild(textarea);
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.id = `highlighted-code-${filename}`;
+        code.className = 'code-container';
+        pre.appendChild(code);
+        container.appendChild(pre)
         fileContentContainer.appendChild(container);
 
         openFiles[filename] = { tab, textarea, lineNumbers, container };
 
-        textarea.addEventListener('keyup', () => {
-            const numberOfLines = textarea.value.split('\n').length;
-            lineNumbers.innerHTML = Array(numberOfLines)
-                .fill('<span></span>')
-                .join('');
+        textarea.addEventListener('input', () => {
+            updateLineNumbers(textarea, lineNumbers);
+            highlightCode(textarea.value, code);
         });
 
         textarea.addEventListener('keydown', (event) => {
@@ -124,6 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switchTab(filename);
         hideInitialPage();
+        updateLineNumbers(textarea, lineNumbers);
+        highlightCode(content, code);
     }
 
     function switchTab(filename) {
@@ -164,6 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showInitialPage() {
         initialPage.style.display = 'flex';
+    }
+
+    function updateLineNumbers(textarea, lineNumbers) {
+        const numberOfLines = textarea.value.split('\n').length;
+        lineNumbers.innerHTML = Array(numberOfLines)
+            .fill('<span></span>')
+            .join('');
+    }
+
+    function highlightCode(content, codeElement) {
+        codeElement.textContent = content;
+        if (content.trim() !== "") {
+            const result = hljs.highlightAuto(content);
+            codeElement.innerHTML = result.value;
+            codeElement.className = 'code-container hljs ' + result.language;
+        } else {
+            codeElement.innerHTML = '';
+        }
     }
 
     fetchFiles(currentPath);

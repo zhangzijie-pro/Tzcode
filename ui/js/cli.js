@@ -1,15 +1,3 @@
-async function updateText() {
-    try {
-        const whoami = await invoke('whoami'); // 调用 Rust 后端的 whoami 函数
-        const pwd = await invoke('pwd'); // 调用 Rust 后端的 pwd 函数
-        
-        document.getElementById('whoami').textContent = whoami;
-        document.getElementById('pwd').textContent = pwd;
-    } catch (error) {
-        console.error('Error invoking Tauri commands:', error);
-    }
-}
-
 async function command(){
     document.addEventListener('DOMContentLoaded', () => {
     const commandInput = document.getElementById('command-input');
@@ -43,6 +31,13 @@ async function command(){
         // Invoke the command on the backend
         const result = await invoke('run_command', { command });
         
+        // refresh pwd
+        invoke('pwd_tauri').then(pwd => {
+            document.getElementById('pwd').textContent = pwd;
+            pwds = pwd
+        }).catch(error => {
+            console.error('Error invoking pwd command:', error);
+        });
         // Display the result in the output container
         const resultLine = document.createElement('div');
         resultLine.className = 'output word-size';
@@ -56,5 +51,4 @@ async function command(){
     });
 }
 
-updateText();
 command();
