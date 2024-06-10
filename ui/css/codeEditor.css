@@ -53,8 +53,7 @@
 }
 
 .file-content{
-    width: 50%;
-    height: 100%;
+    width: 100%;
     border: none;
     line-height: unset;
     box-sizing: border-box;
@@ -87,14 +86,4 @@ textarea {
     max-width: 100%;
     height: auto;
     margin-top: 20px;
-}
-
-.code-container {
-    background: #282a36;
-    width: 100%;
-    color: #f8f8f2;
-    border-radius: 5px;
-    white-space: pre-wrap;
-    word-break: break-word;
-    display: none; /* Hide code container */
 }

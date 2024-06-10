@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPath = 'C:/Users/lenovo/Desktop/rust';
     let openFiles = {};
 
+    // 添加工作区文件夹
     async function fetchFiles(path = ' ', parentElement = null) {
         try {
             const files = await invoke('read_directory', { path });
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 打开文件
     async function openFile(path) {
         try {
             const contents = await invoke('read_file', { path });
@@ -56,10 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 解析文件名
     function extractFilename(path) {
         return path.split('/').pop().split('\\').pop();
     }
 
+    // 创建每一个窗口的Tab
     function createTab(path, content = '') {
         const filename = extractFilename(path);
 
@@ -99,19 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         container.className = 'editor';
         container.appendChild(lineNumbers);
         container.appendChild(textarea);
-        const pre = document.createElement('pre');
-        const code = document.createElement('code');
-        code.id = `highlighted-code-${filename}`;
-        code.className = 'code-container';
-        pre.appendChild(code);
-        container.appendChild(pre)
         fileContentContainer.appendChild(container);
 
         openFiles[filename] = { tab, textarea, lineNumbers, container };
 
         textarea.addEventListener('input', () => {
             updateLineNumbers(textarea, lineNumbers);
-            highlightCode(textarea.value, code);
         });
 
         textarea.addEventListener('keydown', (event) => {
@@ -129,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         switchTab(filename);
         hideInitialPage();
         updateLineNumbers(textarea, lineNumbers);
-        highlightCode(content, code);
     }
 
+    // 匹配正在打开哪一个
     function switchTab(filename) {
         for (const { tab, textarea, lineNumbers, container } of Object.values(openFiles)) {
             if (tab.dataset.filename === filename) {
@@ -148,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 关闭Tab
     function closeTab(filename) {
         if (openFiles[filename]) {
             const { tab, textarea, lineNumbers, container } = openFiles[filename];
@@ -168,26 +166,17 @@ document.addEventListener('DOMContentLoaded', () => {
         initialPage.style.display = 'none';
     }
 
+    // 初始化界面
     function showInitialPage() {
         initialPage.style.display = 'flex';
     }
 
+    // 加载行数
     function updateLineNumbers(textarea, lineNumbers) {
         const numberOfLines = textarea.value.split('\n').length;
         lineNumbers.innerHTML = Array(numberOfLines)
             .fill('<span></span>')
             .join('');
-    }
-
-    function highlightCode(content, codeElement) {
-        codeElement.textContent = content;
-        if (content.trim() !== "") {
-            const result = hljs.highlightAuto(content);
-            codeElement.innerHTML = result.value;
-            codeElement.className = 'code-container hljs ' + result.language;
-        } else {
-            codeElement.innerHTML = '';
-        }
     }
 
     fetchFiles(currentPath);
