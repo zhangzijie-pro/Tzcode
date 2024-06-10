@@ -8,7 +8,7 @@
 jedi_tauri.py
 ```
 
-2.Black 是一个无配置的 Python 代码格式化工
+2.Black 是一个无配置的 Python 代码格式化工具
 ```sh
 format_code.py
 ```
