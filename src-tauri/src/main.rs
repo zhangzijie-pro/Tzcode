@@ -6,7 +6,8 @@ use std::fs::File;
 use std::io::Read;
 use tauri::{command, generate_context, generate_handler, Menu, MenuItem, Submenu};
 use ansi_to_html::convert;
-use tiks_command::{pwd, run::run, whoami, SESSION};
+use tiks_command::{pwd, whoami, SESSION};
+use tiks_command::init_shell::init_shell;
 
 // 读取目录内容
 #[command]
@@ -57,11 +58,9 @@ fn pwd_tauri() -> String{
 
 #[command]
 fn run_command(command: String) -> String {
-  let commands: Vec<&str> = command.split_whitespace().collect();
-  let commands_string: Vec<String> = commands.iter().map(|x| x.to_string()).collect();
   let mut session_lock = SESSION.lock().unwrap();
   let session = &mut *session_lock;
-  let (_code,res) = run(commands_string, session);
+  let res = init_shell(Some(command), session).unwrap();
   let mut html_output = convert(&res).expect("Can't INTO");
   html_output = html_output.replace("\n", "<br>");
   html_output

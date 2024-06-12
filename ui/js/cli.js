@@ -25,7 +25,7 @@ async function command(){
 
         // Display the command in the output container
         const commandLine = document.createElement('div');
-        commandLine.innerHTML = `<span class="prompt word-size">${whoamis}</span>:<span class="directory-cli word-size">${pwds}</span>> ${command}`;
+        commandLine.innerHTML = `<span class="prompt word-size">${whoamis}</span>:<span class="directory-cli word-size">${pwds}</span>> <span class="output word-size">${command}</span>`;
         outputContainer.appendChild(commandLine);
 
         // Invoke the command on the backend
