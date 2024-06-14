@@ -62,6 +62,7 @@ pub mod init_shell{
                             for (t,r) in res{
                                 let str = format!("Done[{t}]: \n{r}");
                                 output.push_str(&str);
+                                output.push_str("\n");
                             }
                             return Some(output);
                         } else if args.contains(&"|".to_string()) {
@@ -74,6 +75,7 @@ pub mod init_shell{
                             for (t,r) in res{
                                 let str = format!("Done[{t}]: \n{r}");
                                 output.push_str(&str);
+                                output.push_str("\n");
                             }
                             return Some(output);
                         } else {

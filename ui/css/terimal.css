@@ -9,7 +9,7 @@
 }
 
 .prompt {
-  color: green;
+  color: #08bf17;
 }
 
 input {
@@ -23,12 +23,9 @@ input {
 
 .word-size{
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14;
   font-weight: normal;
-  letter-spacing: 1;
   line-height: 1.2;
   zoom: 1;
-  scrollbar-width: 10000;
   white-space: normal;
   font-size: small;
 }

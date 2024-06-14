@@ -12,7 +12,23 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
+      },
+      "dialog": {
+        "all": true,
+        "open": true,
+        "save": true
+      }
     },
     "bundle": {
       "active": true,
@@ -58,8 +74,18 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
+        "decorations": false,
         "title": "tiks",
-        "width": 800
+        "width": 800,
+        "visible": false
+      },
+      {
+        "width": 400,
+        "height": 200,
+        "resizable": true,
+        "decorations": false,
+        "url": "init.html",
+        "label": "init"
       }
     ]
   }

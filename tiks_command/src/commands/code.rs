@@ -1,6 +1,6 @@
 use std::process::Command;
 
-use crate::start::state_code::{run_code, run_code_er};
+use crate::{start::state_code::{run_code, run_code_er}, state_code::run_code_string};
 
 // run code use python ...
 pub fn python(file: Option<&str>) -> Result<(usize,String), std::io::Error> {
@@ -12,12 +12,14 @@ pub fn python(file: Option<&str>) -> Result<(usize,String), std::io::Error> {
     .arg(file.unwrap());
 
     let s = cmd.spawn()?.wait();
+    let output = cmd.output()?;
+    let res = String::from_utf8_lossy(&output.stdout).into_owned();
 
     if s.is_err(){
         return Ok(run_code_er());
     }
 
-    Ok(run_code())
+    Ok(run_code_string(res))
 }
 
 

@@ -11,6 +11,23 @@
     <link rel="stylesheet" href="./css/menu.css">
 </head>
 <body>
+    <div data-tauri-drag-region class="titlebar">
+        <div class="titlebar-button" id="titlebar-minimize">
+          <img
+            src="https://api.iconify.design/mdi:window-minimize.svg"
+            alt="minimize"
+          />
+        </div>
+        <div class="titlebar-button" id="titlebar-maximize">
+          <img
+            src="https://api.iconify.design/mdi:window-maximize.svg"
+            alt="maximize"
+          />
+        </div>
+        <div class="titlebar-button" id="titlebar-close">
+          <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
+        </div>
+    </div>
     <div class="container">
         <div class="sidebar" id="sidebar">
             <ul id="fileList" class="file-size">
@@ -21,7 +38,7 @@
             <div class="top-section">
                 <div class="initial-page">
                     <h2>Welcome to Tzcode</h2>
-                    <img src="../src-tauri/icons/icon.ico" alt="Logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 300 300" id="Smirking-Face--Streamline-Kawaii-Emoji" height="150" width="150"><desc>Smirking Face Streamline Emoji: https://streamlinehq.com</desc><defs></defs><path d="M8.97 149.5a140.53 128.57000000000002 0 1 0 281.06 0 140.53 128.57000000000002 0 1 0 -281.06 0" fill="#ffe500" stroke-width="1"></path><path d="M149.5 254.15C69.966 254.15 15.51212 202.91934 9.568000000000001 137.54000000000002c-0.3588 3.9408200000000004 -0.5980000000000001 7.923500000000001 -0.5980000000000001 11.96 0 71.00652000000001 56.212 128.57000000000002 140.53 128.57000000000002S290.03000000000003 220.50652000000002 290.03000000000003 149.5c0 -4.04248 -0.23322 -8.025160000000001 -0.5980000000000001 -11.96 -5.944120000000001 65.37934 -60.398 116.61000000000001 -139.932 116.61000000000001z" fill="#f2c100" stroke-width="1"></path><path d="M110.63000000000001 35.891960000000005a38.870000000000005 5.98598 0 1 0 77.74000000000001 0 38.870000000000005 5.98598 0 1 0 -77.74000000000001 0" fill="#fffacf" stroke-width="1"></path><path d="M8.97 149.5a140.53 128.57000000000002 0 1 0 281.06 0 140.53 128.57000000000002 0 1 0 -281.06 0" stroke-miterlimit="10" fill="none" stroke="#45413c" stroke-width="1"></path><path d="M166.20812 121.83652000000001c0 -9.22714 11.22446 -16.70812 25.06218 -16.70812a27.99238 27.99238 0 0 1 22.610380000000003 9.490260000000001m-134.55598 7.217860000000001c0 -9.22714 11.21848 -16.70812 25.06218 -16.70812a28.997020000000003 28.997020000000003 0 0 1 21.725340000000003 8.372" fill="none" stroke="#45413c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M198.54198000000002 118.49370000000002a10.02248 10.02248 0 1 0 20.04496 0 10.02248 10.02248 0 1 0 -20.04496 0" fill="#45413c" stroke-width="1"></path><path d="M111.65258 118.49370000000002a10.02248 10.02248 0 1 0 20.04496 0 10.02248 10.02248 0 1 0 -20.04496 0" fill="#45413c" stroke-width="1"></path><path d="M126.10624000000001 185.33216000000002c20.403760000000002 3.9886600000000003 52.2951 -4.98134 52.2951 -22.921340000000004m1.1720800000000002 -85.26882c5.286320000000001 -6.1295 35.70658 -11.39788 46.78752 6.67966M119.42658000000002 77.14200000000001c-5.286320000000001 -6.1295 -32.71658 -11.39788 -46.78752 6.67966" fill="none" stroke="#45413c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path></svg>
                 </div>
                 <div class="tab-container">
                     <!-- Tabs will be dynamically added here -->
@@ -35,11 +52,14 @@
                 <!-- Add console or other content here -->
                 <div id="output-container"></div>
                 <div class="input-line">
-                  <span class="prompt word-size" id="whoami"></span>:<span class="word-size directory-cli" id="pwd"></span>> 
+                  <span class="prompt word-size" id="whoami"></span>:<span class="word-size" id="pwd"></span>> 
                   <input type="text" id="command-input" class="word-size" autofocus>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Tzcode. All rights reserved.</p>
     </div>
     <script src="./js/file.js" defer></script>
     <script src="./js/cli.js" defer></script>

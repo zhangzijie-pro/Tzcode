@@ -16,6 +16,10 @@ pub fn run_code() -> (usize, String) {
     (STATUE_CODE, "Running...".to_string())
 }
 
+pub fn run_code_string(str:String) -> (usize,String){
+    (STATUE_CODE,str)
+}
+
 pub fn empty_file() -> (usize, String) {
     (105, "Error: File is not exist".to_string())
 }

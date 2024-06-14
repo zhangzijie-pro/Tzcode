@@ -1,20 +1,27 @@
 {
     "workspace": {
         "back-color": "black",
-        "font-family": "Arial, sans-serif"
-    },
-    "dir": {
-        "background-color": "#1e1e1e",
-        "width": "20%"
-    },
-    "cli": {
-        "flex-size": "9",
-        "background-color": "#252526",
-        "color": "white"
-    },
-    "top-w": {
-        "flex-size":"0.9",
-        "background-color":"#252526",
-        "color": "white"
+        "font-family": "Arial, sans-serif",
+        "file_dir":{
+            "width":"20%",
+            "background-color":"#1e1e1e"
+        },
+        "main-content":{
+            "editor":{
+                "height-flex":"9",
+                "background-color":"#1e1e1e",
+                "font-size":"unset",
+                "top-tab":{
+                    "background-color":"#gray"
+                }
+            },
+            "terimal":{
+                "height-flex":"0.95",
+                "background-color":"#1e1e1e",
+                "font-size":"samller",
+                "font-weight":"normal",
+                "font-family":" "
+            }
+        }
     }
 }
