@@ -1,6 +1,6 @@
-fix dir_file font and style;
-add menu (box of search)
-add init_window
+fix dir_file font and style; -> Done!(1/2)
+add menu (box of search)     -> Done!(1/2)
+add init_window  -> Done!
 highlight code
 Logo
 add button to toggle background-color

@@ -5,12 +5,40 @@
     white-space: nowrap;
 }
 
-.directory {
+#fileList ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.directory, .file {
+    cursor: pointer;
+    margin: 5px 0;
+    padding-left: 10px;
+    position: relative;
     font-weight: bold;
     font-size: x-small;
 }
 
+.directory{
+    color: aquamarine;
+}
+
+.directory::before {
+    content: '\25B7'; /* 空心右箭头 */
+    position: absolute;
+    left: -15px;
+    color: #61dafb;
+    transition: transform 0.2s ease;
+}
+
+.directory.expanded::before {
+    content: '\25BD'; /* 空心下箭头 */
+}
+
 .file {
-    padding-left: 10px;
-    font-size: x-small;
+    color: #abb2bf;
+}
+
+.directory:hover, .file:hover {
+    background-color: #2c2c2c;
 }

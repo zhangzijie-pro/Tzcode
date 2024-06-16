@@ -59,26 +59,26 @@ li {
     padding: 5px;
 }
 
-.top-section,.bottom-section{
+.top-section,.bottom-section,.sidebar{
     overflow-y: scroll;
 }
 
-.top-section::-webkit-scrollbar,.bottom-section::-webkit-scrollbar{
+.top-section::-webkit-scrollbar,.bottom-section::-webkit-scrollbar,.sidebar::-webkit-scrollbar{
     width: 12px;
 }
 
-.top-section::-webkit-scrollbar-track,.bottom-section::-webkit-scrollbar-track{
+.top-section::-webkit-scrollbar-track,.bottom-section::-webkit-scrollbar-track,.sidebar::-webkit-scrollbar-track{
     background: transparent;
 }
 
-.top-section::-webkit-scrollbar-thumb,.bottom-section::-webkit-scrollbar-thumb{
+.top-section::-webkit-scrollbar-thumb,.bottom-section::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb{
     background-color: #555;
     border-radius: 6px;
     border: 3px solid transparent;
     background-clip: content-box;
 }
 
-.top-section::-webkit-scrollbar-thumb:hover,.bottom-section::-webkit-scrollbar-thumb:hover{
+.top-section::-webkit-scrollbar-thumb:hover,.bottom-section::-webkit-scrollbar-thumb:hover,.sidebar::-webkit-scrollbar-thumb:hover{
     background-color: black;
 }
 

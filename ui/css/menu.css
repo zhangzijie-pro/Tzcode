@@ -1,9 +1,30 @@
-/* menu */
 .titlebar {
   height: 30px;
   background: #329ea3;
   user-select: none;
   display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.titlebar-left, .titlebar-right {
+  display: flex;
+  align-items: center;
+}
+
+.titlebar-left {
+  flex: 1;
+}
+
+.titlebar-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.titlebar-right {
+  flex: 1;
   justify-content: flex-end;
 }
 
@@ -13,8 +34,46 @@
   align-items: center;
   width: 30px;
   height: 30px;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
 }
 
 .titlebar-button:hover {
   background: #5bbec3;
+}
+
+.file-menu {
+  -webkit-app-region: no-drag;
+  display: inline-flex;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.file-menu button {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.file-menu button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-box {
+  -webkit-app-region: no-drag;
+  width: 300px; /* 设置固定宽度 */
+}
+
+.search-box input {
+  padding: 3px 5px;
+  border-radius: 20px;
+  border: 1px solid #747272;
+}
+
+.menu-size{
+  color: white;
+  margin: 5px;
+  font-size: x-small;
 }

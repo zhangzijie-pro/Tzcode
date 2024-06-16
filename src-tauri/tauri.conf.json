@@ -82,8 +82,7 @@
       {
         "width": 400,
         "height": 200,
-        "resizable": true,
-        "decorations": false,
+        "resizable": false,
         "url": "init.html",
         "label": "init"
       }
