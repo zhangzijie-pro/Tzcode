@@ -14,3 +14,7 @@ document.getElementById('titlebar-maximize').addEventListener('click', () => {
 document.getElementById('titlebar-close').addEventListener('click', () => {
     appWindow.close()
 });
+
+document.getElementById('titlebar-background').addEventListener('click',()=>{
+    // toggle background  look css /*here
+})

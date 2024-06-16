@@ -39,6 +39,71 @@
     color: #abb2bf;
 }
 
+/*here*/
 .directory:hover, .file:hover {
     background-color: #2c2c2c;
+}
+
+.left-file {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    width: 30%;
+    background-color: #3c3c3c;
+    padding: 10px;
+}
+
+.left-button {
+    cursor: pointer;
+}
+
+.left-button:hover {
+    background: #5bbec3;
+  }
+
+/* Specific setup for right-file */
+.right-file {
+    width: 60%;
+    background-color: #2c2c2c;
+    margin: 10px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-file svg {
+    margin-bottom: 10px; /* Space between SVGs */
+    height:3vw;
+    width:3vw;
+}
+
+.file-size {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#searchBox {
+    padding: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#searchResults {
+    flex-grow: 1;
+    overflow-y: auto; /* Add scrolling if search results overflow */
+}
+
+#searchResults div {
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: #5c5c5c; /* Optional: Background for search result items */
+    color: white; /* Search result item text color */
 }

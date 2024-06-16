@@ -29,6 +29,7 @@
     font-size: smaller;
 }
 
+/*here*/
 .editor {
     width: 100%;
     position: absolute;
@@ -59,6 +60,7 @@
     font-family: monospace;
 }
 
+/*here*/
 textarea {
     overflow-y: hidden;
     padding: 0;
@@ -72,6 +74,7 @@ textarea {
     font-size: unset;
 }
 
+/*here*/
 .initial-page {
     display: flex;
     flex-direction: column;

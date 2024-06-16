@@ -42,7 +42,6 @@ async function fetchFiles(path = '', parentElement = null) {
             ulElement.appendChild(listItem);
         });
 
-        // 如果有父元素，附加到父元素；否则附加到fileList
         if (parentElement) {
             parentElement.appendChild(ulElement);
         } else {
@@ -209,5 +208,32 @@ async function readWorkspaceConfig() {
     }
 }
 
+document.getElementById('home-file').addEventListener('click', function() {
+    document.getElementById('fileList').style.display = 'block';
+    document.getElementById('searchContainer').style.display = 'none';
+});
+
+document.getElementById('search-file').addEventListener('click', function() {
+    document.getElementById('fileList').style.display = 'none';
+    document.getElementById('searchContainer').style.display = 'flex';
+});
+
+document.getElementById('setting').addEventListener('click', function() {
+    // Pass new window to open setting
+});
+
+//search box
+document.getElementById('searchBox').addEventListener('input', function() {
+    let query = this.value.toLowerCase();
+    let resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    let simulatedResults = ['1', '2', '3'].filter(file => file.includes(query));
+    simulatedResults.forEach(result => {
+        let resultDiv = document.createElement('div');
+        resultDiv.textContent = result;
+        resultsContainer.appendChild(resultDiv);
+    });
+});
 
 document.addEventListener('DOMContentLoaded', readWorkspaceConfig());

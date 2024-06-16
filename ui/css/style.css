@@ -19,12 +19,15 @@ body ,html{
     overflow: hidden;
 }
 
+/*here*/
 .sidebar {
     width: 20%;
     background-color: #2c2c2c;
     color: white;
     padding: 10px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-content {
@@ -33,6 +36,7 @@ body ,html{
     flex-direction: column;
 }
 
+/*here*/
 .top-section {
     flex: 3;
     background-color: #1e1e1e;
@@ -41,6 +45,7 @@ body ,html{
     overflow-y: auto;
 }
 
+/*here*/
 .bottom-section {
     flex:0.95;
     background-color: #252526;
