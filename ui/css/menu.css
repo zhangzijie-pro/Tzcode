@@ -37,6 +37,10 @@
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
+.titlebar-button img {
+  height:25px;
+  width:25px;
+}
 
 .titlebar-button:hover {
   background: #5bbec3;

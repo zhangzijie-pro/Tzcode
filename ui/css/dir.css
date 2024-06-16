@@ -73,7 +73,7 @@
     flex-direction: row;
 }
 
-.left-file svg {
+.left-file img {
     margin-bottom: 10px; /* Space between SVGs */
     height:3vw;
     width:3vw;
