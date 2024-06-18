@@ -1,7 +1,26 @@
-fix dir_file font and style; -> Done!(1/2)
-add menu (box of search)     -> Done!(1/2)
-add init_window  -> Done!
-highlight code
-Logo
-add button to toggle background-color
-every workspace need to save in a json file
+task:
+    1. fix dir_file font and style -> Done!
+    2. every workspace need to save in a json file -> Done!
+    3. add init_window  -> Done!
+    4. search     -> Done!(1/2)
+    5. add button to toggle background-color -> (1/2)
+    6. highlight code
+    7. Logo
+    8. code completion
+    9. code formatting
+
+
+
+bug: 
+    1. Can not show png ...picture
+    2. textarea width can not show more
+    3. remind user this file is change or save file
+
+
+
+build exe: 
+    cargo tauri build -> 
+    修改 tauri.conf.json
+    打开 src-tauri/tauri.conf.json 文件
+    找到 tauri > bundle > identifier 配置项
+    将其更改为一个唯一的标识符。例如，使用你自己的域名或一个类似的标识符。通常的格式是 com.yourcompany.yourappname -> com.Tzcode.Tzcode1.0.0

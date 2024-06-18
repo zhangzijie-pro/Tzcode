@@ -2,6 +2,7 @@ const { invoke } = window.__TAURI__.tauri;
 
 const tabContainer = document.querySelector('.tab-container');
 const fileContentContainer = document.querySelector('.file-content-container');
+const fileLanguageElement = document.getElementById('fileLanguage');
 const initialPage = document.querySelector('.initial-page');
 let openFiles = {};
 
@@ -28,10 +29,21 @@ async function fetchFiles(path = '', parentElement = null) {
                     if (listItem.classList.contains('collapsed')) {
                         listItem.classList.remove('collapsed');
                         listItem.classList.add('expanded');
+
+                        const existingUl = listItem.querySelector('ul');
+                        if (existingUl) {
+                            listItem.removeChild(existingUl);
+                        }
+
                         await fetchFiles(`${path}/${name}`, listItem);
                     } else {
                         listItem.classList.add('collapsed');
                         listItem.classList.remove('expanded');
+
+                        const existingUl = listItem.querySelector('ul');
+                        if (existingUl) {
+                            listItem.removeChild(existingUl);
+                        }
                     }
                 });
                 listItem.classList.add('collapsed');
@@ -59,6 +71,8 @@ async function openFile(path) {
     try {
         const contents = await invoke('read_file', { path });
         createTab(path, contents);
+        const language = await code_language(path);
+        updateFooterLanguage(language);
     } catch (error) {
         console.error('Error opening file:', error);
     }
@@ -91,7 +105,7 @@ function createTab(path, content = '') {
     closeButton.style.cursor = 'pointer';
     closeButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        closeTab(filename);
+        checkForUnsavedChanges(filename);
     });
     tab.appendChild(closeButton);
 
@@ -104,18 +118,19 @@ function createTab(path, content = '') {
     const textarea = document.createElement('textarea');
     textarea.className = 'file-content';
     textarea.value = content;
-    textarea.id = 'code';
-    textarea.name='code';
     const container = document.createElement('div');
     container.className = 'editor';
     container.appendChild(lineNumbers);
     container.appendChild(textarea);
     fileContentContainer.appendChild(container);
 
-    openFiles[filename] = { tab, textarea, lineNumbers, container };
+    openFiles[filename] = { tab, closeButton, textarea, lineNumbers, container, content, modified: false };
 
     textarea.addEventListener('input', () => {
         updateLineNumbers(textarea, lineNumbers);
+        const isModified = textarea.value !== openFiles[filename].content;
+        openFiles[filename].modified = isModified;
+        updateTabCloseButton(filename, isModified);
     });
 
     textarea.addEventListener('keydown', (event) => {
@@ -135,8 +150,24 @@ function createTab(path, content = '') {
     updateLineNumbers(textarea, lineNumbers);
 }
 
+// 更新Tab的关闭按钮
+function updateTabCloseButton(filename, isModified) {
+    const { closeButton } = openFiles[filename];
+    if (isModified) {
+        closeButton.innerText = ' ●';
+        closeButton.style.color = 'white';
+        closeButton.title = 'You have unsaved changes. Save or discard changes before closing.';
+    } else {
+        closeButton.innerText = ' x';
+        closeButton.style.color = '';
+        closeButton.title = '';
+    }
+}
+
 // 匹配正在打开哪一个
 function switchTab(filename) {
+    let language = '';
+
     for (const { tab, textarea, lineNumbers, container } of Object.values(openFiles)) {
         if (tab.dataset.filename === filename) {
             tab.classList.add('active');
@@ -145,17 +176,19 @@ function switchTab(filename) {
             lineNumbers.innerHTML = Array(numberOfLines)
                 .fill('<span></span>')
                 .join('');
+            language = code_language(tab.dataset.fullPath);
         } else {
             tab.classList.remove('active');
             container.classList.remove('active');
         }
     }
+
+    language.then(lang => updateFooterLanguage(lang));
 }
 
-// 关闭Tab
 function closeTab(filename) {
     if (openFiles[filename]) {
-        const { tab, textarea, lineNumbers, container } = openFiles[filename];
+        const { tab, container } = openFiles[filename];
         tab.remove();
         container.remove();
         delete openFiles[filename];
@@ -165,9 +198,45 @@ function closeTab(filename) {
             switchTab(remainingFiles[0]);
         } else {
             showInitialPage();
+            updateFooterLanguage('');
         }
     }
 }
+
+function checkForUnsavedChanges(filename) {
+    if (openFiles[filename].modified) {
+        const saveChanges = confirm('You have unsaved changes. Do you want to save them?');
+        if (saveChanges) {
+            save(filename).then(() => closeTab(filename));
+        } else {
+            const discardChanges = confirm('Discard unsaved changes?');
+            if (discardChanges) {
+                closeTab(filename);
+            }
+        }
+    } else {
+        closeTab(filename);
+    }
+}
+
+async function save(filename) {
+    if (openFiles[filename]) {
+        const { textarea, tab } = openFiles[filename];
+        const content = textarea.value;
+        const path = tab.dataset.fullPath;
+
+        try {
+            await invoke('write_file', { path, content });
+            openFiles[filename].content = content;
+            openFiles[filename].modified = false;
+            updateTabCloseButton(filename, false);
+            console.log(`File ${filename} saved successfully.`);
+        } catch (error) {
+            console.error(`Error saving file ${filename}:`, error);
+        }
+    }
+}
+
 
 function hideInitialPage() {
     initialPage.style.display = 'none';
@@ -222,6 +291,7 @@ document.getElementById('setting').addEventListener('click', function() {
     // Pass new window to open setting
 });
 
+
 //search box
 document.getElementById('searchBox').addEventListener('input', function() {
     let query = this.value.toLowerCase();
@@ -235,5 +305,18 @@ document.getElementById('searchBox').addEventListener('input', function() {
         resultsContainer.appendChild(resultDiv);
     });
 });
+
+function code_language(filename){
+    let language = invoke('get_file_language',{filename});
+    return language
+}
+
+function updateFooterLanguage(language) {
+    if (language) {
+        fileLanguageElement.textContent = `{ } ${language}`;
+    } else {
+        fileLanguageElement.textContent = '';
+    }
+}
 
 document.addEventListener('DOMContentLoaded', readWorkspaceConfig());

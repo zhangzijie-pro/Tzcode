@@ -209,13 +209,22 @@ pub fn execute_other_command(command: &str, option: &str, arg: &[String]) -> Res
             false=>cp(&arg[0], &arg[1]),
         }
         _ =>{
-            let similar = get_similar(&command).join("    ");
-            let output = format!("
-Error: Can't found this \x1B[31m{}\x1B[0m
-    Did you mean?
-{}", command,similar
-            );
-            Ok((403,output))
+            let mut file = vec![option];
+            for i in arg{
+                file.push(&i)
+            }
+            let res = other_code(Some(command), Some(file));
+            if let Ok(output) = res{
+                return Ok(output);
+            }else{
+                let similar = get_similar(&command).join("    ");
+                let output = format!("
+    Error: Can't found this \x1B[31m{}\x1B[0m
+        Did you mean?
+    {}", command,similar
+                );
+                Ok((403,output))
+            }
         }
     }
 }

@@ -45,7 +45,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.Tzcode.Tzcode1.0.0",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -81,7 +81,7 @@
       },
       {
         "width": 400,
-        "height": 200,
+        "height": 250,
         "resizable": false,
         "url": "init.html",
         "label": "init"

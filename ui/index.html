@@ -17,11 +17,13 @@
             <div class="file-menu">
                 <div id="file-action" class="menu-size">文件(F)</div>
                 <div id="edit" class="menu-size">编辑(E)</div>
+                <div id="help" class="menu-size">帮助(H)</div>
             </div>
         </div>
         <div class="titlebar-center">
             <div class="search-box">
-                <input type="text" placeholder="Search files..." onkeypress="workspace(path)" />
+                <!--find this workspace named (?) file-->
+                <input type="text" id="search-file" placeholder="Search files..." onkeypress="workspace(path)" />
             </div>
         </div>
         <div class="titlebar-right">
@@ -49,7 +51,7 @@
                 <div class="left-button" id="search-file">
                     <img src="./svg/seacrh.svg">
                 </div>
-                <div class="left-button" id="setting">
+                <div class="left-button" id="setting" style="position: relative; top: 80%;">
                     <img src="./svg/setting.svg">
                 </div>
             </div>
@@ -91,8 +93,27 @@
     </div>
     <!--footer-->
     <div class="footer">
-        <p>&copy; 2024 Tzcode. All rights reserved.</p>
+        <div class="left">
+            <a href="https://github.com/zhangzijie-pro/Tzcode">
+                <img src="./svg/github.svg">
+                Github</a>
+            <a href="https://cn.bing.com/">
+                <img src="./svg/web.svg">
+                Bing search
+            </a>
+            <a href="https://github.com/zhangzijie-pro/Tiks">
+                <img src="./svg/terimal.svg">
+                terimal guide
+            </a>
+        </div>
+        <div class="center">
+            <span>&copy; 2024 Tzcode. All rights reserved.</span>
+        </div>
+        <div class="right">
+            <span id="fileLanguage"></span>
+        </div>
     </div>
+    
     <script src="./js/file.js" defer></script>
     <script src="./js/cli.js" defer></script>
     <script src="./js/extension.js" defer></script>

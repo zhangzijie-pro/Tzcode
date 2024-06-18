@@ -28,6 +28,10 @@ async function command(){
         commandLine.innerHTML = `<span class="prompt word-size">${whoamis}</span>:<span class="word-size">${pwds}</span>> <span class="output word-size">${command}</span>`;
         outputContainer.appendChild(commandLine);
 
+        if (command=='clear'){
+            outputContainer.innerHTML = '';
+            return;
+        }
         // Invoke the command on the backend
         const result = await invoke('run_command', { command });
         

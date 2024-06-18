@@ -1,6 +1,6 @@
 use std::fs;
 use std::fs::File;
-use std::io::Read;
+use std::io::{Read, Write};
 use tauri::command;
 // 读取目录内容
 #[command]
@@ -33,8 +33,9 @@ pub fn read_file(path: String) -> Result<String, String> {
 
 // 写入文件内容
 #[command]
-fn _write_file(path: String, contents: String) -> Result<(), String> {
-  fs::write(&path, contents).map_err(|e| e.to_string())
+pub fn write_file(path: String, content: String) -> Result<(), String> {
+    let mut file = File::create(&path).map_err(|e| e.to_string())?;
+    file.write_all(content.as_bytes()).map_err(|e| e.to_string())
 }
 
 
@@ -92,4 +93,30 @@ pub fn write_workspace_config(config:Config) -> Result<(),String>{
     let data = serde_json::to_string_pretty(&config).map_err(|err| err.to_string())?;
     fs::write(WORK_PATH, data).map_err(|err| err.to_string())?;
     Ok(())
+}
+
+
+#[command]
+pub fn get_file_language(filename:String) -> String{
+    let file_spilt:Vec<&str> = filename.split('.').collect();
+    if let Some(suffix) = file_spilt.last(){
+        match *suffix {
+            "txt"=>String::from("text"),
+            "rs"=>String::from("rust"),
+            "py"=>String::from("python"),
+            "js"=>String::from("javascript"),
+            "css"=>String::from("css"),
+            "html"=>String::from("html"),
+            "java"=>String::from("java"),
+            "c"=>String::from("C"),
+            "php"=>String::from("php"),
+            "yaml"=>String::from("yaml"),
+            "json"=>String::from("json"),
+            "toml"=>String::from("TOML"),
+            "md"=>String::from("Markdown"),
+            _ => String::from("text")
+        }
+    }else{
+        String::from("unknow")
+    }
 }

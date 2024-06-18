@@ -7,15 +7,12 @@
 
 #fileList ul {
     list-style-type: none;
-    padding-left: 20px;
 }
 
 .directory, .file {
     cursor: pointer;
     margin: 5px 0;
-    padding-left: 10px;
     position: relative;
-    font-weight: bold;
     font-size: x-small;
 }
 
@@ -39,7 +36,6 @@
     color: #abb2bf;
 }
 
-/*here*/
 .directory:hover, .file:hover {
     background-color: #2c2c2c;
 }
@@ -48,7 +44,7 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Center horizontally */
-    width: 30%;
+    width: 20%;
     background-color: #3c3c3c;
     padding: 10px;
 }
@@ -58,7 +54,7 @@
 }
 
 .left-button:hover {
-    background: #5bbec3;
+    background: #2c2c2c;
   }
 
 /* Specific setup for right-file */
@@ -74,9 +70,9 @@
 }
 
 .left-file img {
-    margin-bottom: 10px; /* Space between SVGs */
-    height:3vw;
-    width:3vw;
+    margin-bottom: 20px; /* Space between SVGs */
+    height:2vw;
+    width:2vw;
 }
 
 .file-size {
