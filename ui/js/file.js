@@ -291,21 +291,6 @@ document.getElementById('setting').addEventListener('click', function() {
     // Pass new window to open setting
 });
 
-
-//search box
-document.getElementById('searchBox').addEventListener('input', function() {
-    let query = this.value.toLowerCase();
-    let resultsContainer = document.getElementById('searchResults');
-    resultsContainer.innerHTML = ''; // Clear previous results
-
-    let simulatedResults = ['1', '2', '3'].filter(file => file.includes(query));
-    simulatedResults.forEach(result => {
-        let resultDiv = document.createElement('div');
-        resultDiv.textContent = result;
-        resultsContainer.appendChild(resultDiv);
-    });
-});
-
 function code_language(filename){
     let language = invoke('get_file_language',{filename});
     return language

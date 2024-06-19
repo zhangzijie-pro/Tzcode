@@ -5,6 +5,7 @@ let currentPath = "";
 let config = {
     workspace: []
 };
+let workspace_now = "";
 
 // 将反斜杠替换为双反斜杠
 function normalizePathToDoubleBackslashes(path) {
@@ -20,6 +21,7 @@ async function readWorkspaceConfig() {
         if (config.workspace.length > 0) {
             currentPath = config.workspace[0];
             document.getElementById('name').textContent = currentPath;
+            workspace_now=currentPath;
         }
     } catch (error) {
         console.error("Error reading workspace config:", error);

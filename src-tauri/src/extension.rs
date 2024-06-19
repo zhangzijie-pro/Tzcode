@@ -1,24 +1,26 @@
 use tauri::command;
 use std::fs;
 
+
 #[command]
-pub fn _get_all_file(origin_path:String) -> Result<Vec<String>,String>{
-    match fs::read_dir(&origin_path){
+pub fn get_all_file(origin_path:String) -> Result<Vec<String>,String>{
+    match std::fs::read_dir(&origin_path){
         Ok(entries) => {
-            let mut res = vec![];
-            for i in entries{
-                let entry = i.map_err(|e| e.to_string())?;
-                if entry.path().is_file(){
-                    res.push(entry.file_name().to_string_lossy().into_owned())
-                }
+        let mut res = vec![];
+        for i in entries{
+            let entry = i.map_err(|e| e.to_string())?;
+            if entry.path().is_file(){
+                res.push(entry.file_name().to_string_lossy().into_owned())
             }
+        }
             Ok(res)
         },
         Err(err)=>Err(err.to_string()),
     }
 }
 
-pub fn _find_file(pattern: String,file: Vec<String>) -> Vec<String>{
+#[command]
+pub fn find_file(pattern: String,file: Vec<String>) -> Vec<String>{
     file.into_iter()
         .filter(|file| file.contains(&pattern))
         .collect()
@@ -27,7 +29,7 @@ pub fn _find_file(pattern: String,file: Vec<String>) -> Vec<String>{
 use std::collections::HashMap;
 use std::io::{self, BufRead};
 #[command]
-fn _get_files_with_pattern(origin_path: String, pattern: String) -> Result<Vec<HashMap<String, Vec<String>>>, String> {
+pub fn get_files_with_pattern(origin_path: String, pattern: String) -> Result<Vec<HashMap<String, Vec<String>>>, String> {
     let mut result = Vec::new();
 
     let entries = fs::read_dir(&origin_path).map_err(|e| e.to_string())?;

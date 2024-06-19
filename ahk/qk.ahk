@@ -1,2 +1,0 @@
-#SingleInstance, Force
-MsgBox, "example"

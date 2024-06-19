@@ -15,15 +15,34 @@
     <div data-tauri-drag-region class="titlebar">
         <div class="titlebar-left">
             <div class="file-menu">
-                <div id="file-action" class="menu-size">文件(F)</div>
-                <div id="edit" class="menu-size">编辑(E)</div>
-                <div id="help" class="menu-size">帮助(H)</div>
+                <div id="file-action" class="menu-size">文件(F)
+                    <div class="dropdown-content">
+                        <div class="dropdown-item" onclick="newFile()">新建文件</div>
+                        <div class="dropdown-item underline" onclick="newDir()">新建文件夹</div>
+                        <div class="dropdown-item" onclick="saveCurrentFile()">保存文件</div>
+                    </div>
+                </div>
+                <div id="edit" class="menu-size">编辑(E)
+                    <div class="dropdown-content">
+                        <div class="dropdown-item" onclick="undo()">撤销</div>
+                        <div class="dropdown-item underline" onclick="redo()">重做</div>
+                        <div class="dropdown-item" onclick="cut()">剪切</div>
+                        <div class="dropdown-item" onclick="copy()">复制</div>
+                        <div class="dropdown-item" onclick="paste()">粘贴</div>
+                    </div>
+                </div>
+                <div id="help" class="menu-size">帮助(H)
+                    <div class="dropdown-content">
+                        <div class="dropdown-item" onclick="openHelp()">帮助文档</div>
+                        <div class="dropdown-item" onclick="about()">关于</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="titlebar-center">
-            <div class="search-box">
+            <div id="search-container" class="search-box" >
                 <!--find this workspace named (?) file-->
-                <input type="text" id="search-file" placeholder="Search files..." onkeypress="workspace(path)" />
+                <input type="text" id="search-filename" placeholder="Search files..."/>
             </div>
         </div>
         <div class="titlebar-right">
@@ -121,4 +140,3 @@
     <script src="./js/plugin.js" defer></script>
 </body>
 </html>
-

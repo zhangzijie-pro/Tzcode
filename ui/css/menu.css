@@ -81,3 +81,37 @@
   margin: 5px;
   font-size: x-small;
 }
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2c2c2c;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+
+.underline{
+  border-bottom: 1px solid white;
+}
+
+.dropdown-item:hover {
+  background-color: #2c2c2c;
+}
+
+.menu-size:hover .dropdown-content {
+  display: block;
+}
+
+.menu-size:active .dropdown-content {
+  display: block;
+}
+
+
+/*Search Box*/
