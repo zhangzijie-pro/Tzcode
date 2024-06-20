@@ -115,3 +115,23 @@
 
 
 /*Search Box*/
+.search-results {
+  display: none;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background-color: #61dafb;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.search-result-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}

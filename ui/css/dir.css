@@ -81,25 +81,38 @@
     margin: 0;
 }
 
+/* Search Box */
 .search-container {
     display: flex;
     flex-direction: column;
+    width: 130%;
 }
-
+/* Input line style */
 #searchBox {
-    padding: 5px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #2b2b2b;
+    color: white;
+    border: none;
+    border-radius: 4px;
 }
 
 #searchResults {
-    flex-grow: 1;
-    overflow-y: auto; /* Add scrolling if search results overflow */
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
 }
 
 #searchResults div {
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 5px;
-    background-color: #5c5c5c; /* Optional: Background for search result items */
-    color: white; /* Search result item text color */
+    background-color: #5c5c5c;
+    color: white;
+    border-radius: 4px;
+}
+
+.search-result-item-box {
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
 }

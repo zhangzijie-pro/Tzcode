@@ -2,19 +2,20 @@ task:
     1. fix dir_file font and style -> Done!
     2. every workspace need to save in a json file -> Done!
     3. add init_window  -> Done!
-    4. search     -> Done!(1/2)
+    4. search     -> Done!
     5. add button to toggle background-color -> (1/2)
     6. highlight code
     7. Logo
     8. code completion
     9. code formatting
+    10.Setting
 
 
 
 bug: 
     1. Can not show png ...picture
     2. textarea width can not show more
-    3. remind user this file is change or save file
+    3. remind user this file is change or save file -> Done!
 
 
 
