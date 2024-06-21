@@ -2,6 +2,7 @@ use std::fs;
 use std::fs::File;
 use std::io::{Read, Write};
 use tauri::command;
+
 // 读取目录内容
 #[command]
 pub fn read_directory(path: String) -> Result<Vec<(String, bool)>, String> {
@@ -38,7 +39,6 @@ pub fn write_file(path: String, content: String) -> Result<(), String> {
     file.write_all(content.as_bytes()).map_err(|e| e.to_string())
 }
 
-
 use tauri::api::dialog::FileDialogBuilder;
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -72,11 +72,10 @@ pub fn open_workspace() -> Result<String, String> {
   Err("Can't find folder".to_string())
 }
 
-
 use serde::{Deserialize, Serialize};
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize,PartialEq)]
 pub struct Config {
-    workspace: Vec<String>,
+    pub(crate) workspace: Vec<String>,
 }
 
 const WORK_PATH:&str = "../space/workspace.json";
@@ -94,7 +93,6 @@ pub fn write_workspace_config(config:Config) -> Result<(),String>{
     fs::write(WORK_PATH, data).map_err(|err| err.to_string())?;
     Ok(())
 }
-
 
 #[command]
 pub fn get_file_language(filename:String) -> String{
