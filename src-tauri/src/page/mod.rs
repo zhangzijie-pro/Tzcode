@@ -20,4 +20,21 @@ pub mod new_window{
         .build()
         .expect("Failed to build window");
     }
+
+    #[command]
+    pub async fn open_setting(app_handle: tauri::AppHandle){
+        let _setting = WindowBuilder::new(
+            &app_handle,
+            "Setting", 
+            WindowUrl::App("setting.html".into())
+        )
+        .title("setting")
+        .fullscreen(false)
+        .resizable(true)
+        .decorations(false)
+        .inner_size(300.0, 250.0)
+        .visible(true)
+        .build()
+        .expect("Failed to build window");
+    }
 }
