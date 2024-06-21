@@ -112,7 +112,7 @@ pub fn get_file_language(filename:String) -> String{
             "json"=>String::from("json"),
             "toml"=>String::from("TOML"),
             "md"=>String::from("Markdown"),
-            _ => String::from("text")
+            _ => String::from("unkown")
         }
     }else{
         String::from("unknow")

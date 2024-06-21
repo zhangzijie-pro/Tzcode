@@ -23,6 +23,12 @@ async function fetchFiles(path = '', parentElement = null) {
             listItem.textContent = name;
             listItem.className = isDirectory ? 'directory' : 'file';
 
+            // 添加右键菜单
+            listItem.addEventListener('contextmenu', (event) => {
+                event.preventDefault(); // 阻止默认右键菜单
+                showContextMenu(event.clientX, event.clientY, path,listItem, isDirectory);
+            });
+
             if (isDirectory) {
                 listItem.addEventListener('click', async (event) => {
                     event.stopPropagation();
@@ -66,6 +72,53 @@ async function fetchFiles(path = '', parentElement = null) {
     }
 }
 
+async function showContextMenu(x, y, path,listItem, isDirectory) {
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'context-menu';
+    contextMenu.style.top = `${y}px`;
+    contextMenu.style.left = `${x}px`;
+
+    // 定义右键菜单项及其对应的事件处理函数
+    const menuOptions = [
+        { label: isDirectory ? 'New file':'open' , action: () => openFileAction(path,listItem) },
+        { label: isDirectory ? 'New Folder' : 'Delete', action: async () => await deleteFileAction(path,listItem, isDirectory) }
+        // Add more options as needed
+    ];
+
+    menuOptions.forEach(option => {
+        const menuItem = document.createElement('div');
+        menuItem.textContent = option.label;
+        menuItem.className = 'context-menu-item';
+        menuItem.addEventListener('click', () => {
+            option.action();
+            contextMenu.remove();
+        });
+        contextMenu.appendChild(menuItem);
+    });
+
+    document.body.appendChild(contextMenu);
+
+    // Close context menu on click outside
+    document.addEventListener('click', () => contextMenu.remove(), { once: true });
+}
+
+function openFileAction(o_path,listItem) {
+    const filePath = listItem.textContent;
+    const path = `${o_path}/${filePath}`
+    console.log('open file: ',path);
+    openFile(path);
+}
+
+async function deleteFileAction(o_path,listItem, isDirectory) {
+    const filePath = listItem.textContent;
+    const path = `${o_path}/${filePath}`
+    if (isDirectory) {
+        // Implement logic to delete a dir
+    } else {
+        // Implement logic to delete a file
+    }
+}
+
 // 打开文件
 async function openFile(path) {
     try {
@@ -73,6 +126,7 @@ async function openFile(path) {
         createTab(path, contents);
         const language = await code_language(path);
         updateFooterLanguage(language);
+        console.log(path,"language is: ",language);
     } catch (error) {
         console.error('Error opening file:', error);
     }
@@ -277,19 +331,6 @@ async function readWorkspaceConfig() {
     }
 }
 
-document.getElementById('home-file').addEventListener('click', function() {
-    document.getElementById('fileList').style.display = 'block';
-    document.getElementById('searchContainer').style.display = 'none';
-});
-
-document.getElementById('search-file').addEventListener('click', function() {
-    document.getElementById('fileList').style.display = 'none';
-    document.getElementById('searchContainer').style.display = 'flex';
-});
-
-document.getElementById('setting').addEventListener('click', function() {
-    // Pass new window to open setting
-});
 
 function code_language(filename){
     let language = invoke('get_file_language',{filename});

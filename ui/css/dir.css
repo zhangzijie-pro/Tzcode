@@ -116,3 +116,25 @@
     border-bottom: 1px solid #eee;
     cursor: pointer;
 }
+
+
+/* right click */
+.context-menu {
+    position: absolute;
+    z-index: 1000;
+    background-color: #2c2c2f;
+    border: 1px solid #060101e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 120px;
+}
+
+.context-menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.context-menu-item:hover {
+    background-color: #a7a3a3;
+}

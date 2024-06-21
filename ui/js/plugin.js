@@ -16,28 +16,27 @@ document.addEventListener('keydown', async(event) => {
     }
 });
 
-// 保存当前活动的文件
+// Save active file
 function saveCurrentFile() {
     const activeTab = document.querySelector('.tab.active');
     if (activeTab) {
         const filename = activeTab.dataset.filename;
+        console.log("save file: ",filename);
         save(filename);
     }
 }
 
-// 保存当前活动的文件
+// close active file
 function closeCurrentFile() {
     const activeTab = document.querySelector('.tab.active');
     if (activeTab) {
         const filename = activeTab.dataset.filename;
+        console.log("close file: ",filename);
         checkForUnsavedChanges(filename);
     }
 }
 
-
-
-// 40 ---- 135
-// 拆分active.tab的上一个文件夹
+/* found active tab to search file or pattern in dir */
 document.addEventListener('DOMContentLoaded', async () => {
     const searchInput = document.getElementById('search-filename');
     const searchResults = document.getElementById('search-results');
@@ -158,8 +157,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         subtree: true,
         attributeFilter: ['class']
     });
-
-
 
     await updateActivePath();
 });

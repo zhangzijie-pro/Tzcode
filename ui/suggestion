@@ -10,6 +10,9 @@ task:
     6. highlight code
     8. code completion
     9. code formatting
+    11. right click can update
+    12. update this app
+    13. build.rs
 
 
 bug: 
