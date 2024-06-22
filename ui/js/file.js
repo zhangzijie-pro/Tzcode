@@ -14,7 +14,7 @@ let config = {
 // 添加工作区文件夹
 async function fetchFiles(path = '', parentElement = null) {
     try {
-        // 读取目录内容
+        // Read directory content
         const files = await invoke('read_directory', { path });
         const ulElement = document.createElement('ul');
 
@@ -22,12 +22,6 @@ async function fetchFiles(path = '', parentElement = null) {
             const listItem = document.createElement('li');
             listItem.textContent = name;
             listItem.className = isDirectory ? 'directory' : 'file';
-
-            // 添加右键菜单
-            listItem.addEventListener('contextmenu', (event) => {
-                event.preventDefault(); // 阻止默认右键菜单
-                showContextMenu(event.clientX, event.clientY, path,listItem, isDirectory);
-            });
 
             if (isDirectory) {
                 listItem.addEventListener('click', async (event) => {
@@ -52,10 +46,21 @@ async function fetchFiles(path = '', parentElement = null) {
                         }
                     }
                 });
+
                 listItem.classList.add('collapsed');
             } else {
-                listItem.addEventListener('click', () => openFile(`${path}/${name}`));
+                listItem.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent context menu on file click
+                    openFile(`${path}/${name}`);
+                });
             }
+
+            // Add right-click menu
+            listItem.addEventListener('contextmenu', (event) => {
+                event.preventDefault(); // Prevent default right-click menu
+                removeExistingContextMenu(); // Remove existing context menu
+                showContextMenu(event.clientX, event.clientY, path, listItem, isDirectory);
+            });
 
             ulElement.appendChild(listItem);
         });
@@ -72,18 +77,35 @@ async function fetchFiles(path = '', parentElement = null) {
     }
 }
 
-async function showContextMenu(x, y, path,listItem, isDirectory) {
+// 去掉右键事件
+function removeExistingContextMenu() {
+    const existingMenu = document.querySelector('.context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+}
+
+// 列出右键事件
+async function showContextMenu(x, y, path, listItem, isDirectory) {
     const contextMenu = document.createElement('div');
     contextMenu.className = 'context-menu';
     contextMenu.style.top = `${y}px`;
     contextMenu.style.left = `${x}px`;
 
-    // 定义右键菜单项及其对应的事件处理函数
-    const menuOptions = [
-        { label: isDirectory ? 'New file':'open' , action: () => openFileAction(path,listItem) },
-        { label: isDirectory ? 'New Folder' : 'Delete', action: async () => await deleteFileAction(path,listItem, isDirectory) }
-        // Add more options as needed
-    ];
+    let menuOptions;
+    if (isDirectory) {
+        menuOptions = [
+            { label: 'New File', action: () => openFileAction(path, listItem) },
+            { label: 'New Folder', action: async () => await deleteFileAction(path, listItem, isDirectory) }
+            // Add more options for directories as needed
+        ];
+    } else {
+        menuOptions = [
+            { label: 'Open', action: () => openFileAction(path, listItem) },
+            { label: 'Delete', action: async () => await deleteFileAction(path, listItem, isDirectory) }
+            // Add more options for files as needed
+        ];
+    }
 
     menuOptions.forEach(option => {
         const menuItem = document.createElement('div');
@@ -102,6 +124,7 @@ async function showContextMenu(x, y, path,listItem, isDirectory) {
     document.addEventListener('click', () => contextMenu.remove(), { once: true });
 }
 
+// right click 
 function openFileAction(o_path,listItem) {
     const filePath = listItem.textContent;
     const path = `${o_path}/${filePath}`
@@ -118,6 +141,11 @@ async function deleteFileAction(o_path,listItem, isDirectory) {
         // Implement logic to delete a file
     }
 }
+
+
+
+
+// Editor 
 
 // 打开文件
 async function openFile(path) {
@@ -138,13 +166,16 @@ function extractFilename(path) {
 }
 
 // 创建每一个窗口的Tab
-function createTab(path, content = '') {
+async function createTab(path, content = '') {
     const filename = extractFilename(path);
 
     if (openFiles[filename]) {
         switchTab(filename);
         return;
     }
+
+    const language = await code_language(filename);
+    const mode = getCodeMirrorMode(language);
 
     const tab = document.createElement('div');
     tab.className = 'tab';
@@ -165,81 +196,45 @@ function createTab(path, content = '') {
 
     tabContainer.appendChild(tab);
 
-    const lineNumbers = document.createElement('div');
-    lineNumbers.className = 'line-numbers';
-    const spanElement = document.createElement('span');
-    lineNumbers.appendChild(spanElement);
-    const textarea = document.createElement('textarea');
-    textarea.className = 'file-content';
-    textarea.value = content;
+    const textareaContainer = document.createElement('div');
+    textareaContainer.className = 'file-content';
+
     const container = document.createElement('div');
     container.className = 'editor';
-    container.appendChild(lineNumbers);
-    container.appendChild(textarea);
+    container.appendChild(textareaContainer);
     fileContentContainer.appendChild(container);
 
-    openFiles[filename] = { tab, closeButton, textarea, lineNumbers, container, content, modified: false };
+    const editor = CodeMirror(textareaContainer, {
+        value: content,
+        mode: mode,
+        lineNumbers: true,
+        indentUnit: 4,
+        tabSize: 4,
+        indentWithTabs: true,
+    });
 
-    textarea.addEventListener('input', () => {
-        updateLineNumbers(textarea, lineNumbers);
-        const isModified = textarea.value !== openFiles[filename].content;
+    openFiles[filename] = { tab, closeButton, editor, container, content, modified: false };
+
+    editor.on('change', () => {
+        const isModified = editor.getValue() !== openFiles[filename].content;
         openFiles[filename].modified = isModified;
         updateTabCloseButton(filename, isModified);
     });
 
-    textarea.addEventListener('keydown', (event) => {
+    editor.on('keydown', (editor, event) => {
         if (event.key === 'Tab') {
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-
-            textarea.value = textarea.value.substring(0, start) + '\t' + textarea.value.substring(end);
-            textarea.selectionStart = textarea.selectionEnd = start + 1;
-
+            const doc = editor.getDoc();
+            const cursor = doc.getCursor();
+            doc.replaceRange('\t', cursor);
             event.preventDefault();
         }
     });
 
     switchTab(filename);
     hideInitialPage();
-    updateLineNumbers(textarea, lineNumbers);
 }
 
-// 更新Tab的关闭按钮
-function updateTabCloseButton(filename, isModified) {
-    const { closeButton } = openFiles[filename];
-    if (isModified) {
-        closeButton.innerText = ' ●';
-        closeButton.style.color = 'white';
-        closeButton.title = 'You have unsaved changes. Save or discard changes before closing.';
-    } else {
-        closeButton.innerText = ' x';
-        closeButton.style.color = '';
-        closeButton.title = '';
-    }
-}
-
-// 匹配正在打开哪一个
-function switchTab(filename) {
-    let language = '';
-
-    for (const { tab, textarea, lineNumbers, container } of Object.values(openFiles)) {
-        if (tab.dataset.filename === filename) {
-            tab.classList.add('active');
-            container.classList.add('active');
-            const numberOfLines = textarea.value.split('\n').length;
-            lineNumbers.innerHTML = Array(numberOfLines)
-                .fill('<span></span>')
-                .join('');
-            language = code_language(tab.dataset.fullPath);
-        } else {
-            tab.classList.remove('active');
-            container.classList.remove('active');
-        }
-    }
-
-    language.then(lang => updateFooterLanguage(lang));
-}
-
+// 关闭文件
 function closeTab(filename) {
     if (openFiles[filename]) {
         const { tab, container } = openFiles[filename];
@@ -257,6 +252,74 @@ function closeTab(filename) {
     }
 }
 
+// 得到语言的模式
+function getCodeMirrorMode(language) {
+    switch (language) {
+        case 'javascript':
+            return 'javascript';
+        case 'python':
+            return 'python';
+        case 'rust':
+            return 'rust';
+        case 'css':
+            return 'css';
+        case 'html':
+            return 'htmlmixed';
+        case 'shell':
+            return 'shell';
+        case 'java':
+            return 'clike';
+        case 'c':
+            return 'clike';
+        case 'yaml':
+        case 'yml':
+            return 'yaml';
+        case 'toml':
+            return 'toml';
+        case 'json':
+            return 'application/json';
+        case 'markdown':
+            return 'markdown';
+        // Add more cases as needed
+        default:
+            return 'plaintext';
+    }
+}
+
+// 更新x为。
+function updateTabCloseButton(filename, isModified) {
+    const { closeButton } = openFiles[filename];
+    if (isModified) {
+        closeButton.innerText = ' ●';
+        closeButton.style.color = 'white';
+        closeButton.title = 'You have unsaved changes. Save or discard changes before closing.';
+    } else {
+        closeButton.innerText = ' x';
+        closeButton.style.color = '';
+        closeButton.title = '';
+    }
+}
+
+// 匹配打开的页面
+function switchTab(filename) {
+    let language = '';
+
+    for (const { tab, editor, container } of Object.values(openFiles)) {
+        if (tab.dataset.filename === filename) {
+            tab.classList.add('active');
+            container.classList.add('active');
+            language = code_language(tab.dataset.fullPath);
+        } else {
+            tab.classList.remove('active');
+            container.classList.remove('active');
+        }
+    }
+
+    language.then(lang => updateFooterLanguage(lang));
+}
+
+
+// 检查为保存的更改
 function checkForUnsavedChanges(filename) {
     if (openFiles[filename].modified) {
         const saveChanges = confirm('You have unsaved changes. Do you want to save them?');
@@ -273,6 +336,7 @@ function checkForUnsavedChanges(filename) {
     }
 }
 
+// 保存文件
 async function save(filename) {
     if (openFiles[filename]) {
         const { textarea, tab } = openFiles[filename];
@@ -291,25 +355,15 @@ async function save(filename) {
     }
 }
 
-
+// 初始化界面
 function hideInitialPage() {
     initialPage.style.display = 'none';
 }
 
-// 初始化界面
+
 function showInitialPage() {
     initialPage.style.display = 'flex';
 }
-
-
-// 加载行数
-function updateLineNumbers(textarea, lineNumbers) {
-    const numberOfLines = textarea.value.split('\n').length;
-    lineNumbers.innerHTML = Array(numberOfLines)
-        .fill('<span></span>')
-        .join('');
-}
-
 
 // 将反斜杠替换为双反斜杠
 function normalizePathToDoubleBackslashes(path) {

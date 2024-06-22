@@ -1,1 +1,17 @@
 init -> register user in terminal -> init window -> choose a workspace -> Tzcode
+
+tiks_command: 
+    main -> build command exe to create user
+
+src-tauri:
+    1.main{
+        check user active
+        build dir
+        run tauri
+    },
+    2.build{
+        cargo build --release -> ../tiks_command -> tiks.exe -> set env 
+    } -> Done!
+
+
+setting: use py to change file and check content of file

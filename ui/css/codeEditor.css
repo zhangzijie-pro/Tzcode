@@ -13,65 +13,25 @@
     border-bottom: 1px solid #1e1e1e;
 }
 
-.line-numbers {
-    width: 20px;
-    text-align: left;
-}
-
-.line-numbers span {
-    counter-increment: linenumber;
-}
-
-.line-numbers span::before {
-    content: counter(linenumber);
-    display: block;
-    color: #506882;
-    font-size: smaller;
-}
-
-/*here*/
 .editor {
-    width: 100%;
+    visibility: hidden;
+    background-color: #2e2e2e;
+    color: #ffffff;
     position: absolute;
-    display: none;
-    gap: 20px;
-    font-family: monospace;
-    line-height: 21px;
-    background: #1e1e1e;
-    border-radius: 2px;
-    padding: 20px 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
-.editor.active{
-    display: flex;
-}
-
-.file-content-container {
-    height: calc(100vh - 50px);
-    width: 100%;
+.editor.active {
+    visibility: visible;
     position: relative;
 }
 
+/*here*/
 .file-content{
     width: 100%;
-    border: none;
-    line-height: unset;
-    box-sizing: border-box;
-    font-family: monospace;
-}
-
-/*here*/
-textarea {
-    overflow-y: hidden;
-    padding: 0;
-    border: 0;
-    background: #1e1e1e;
-    color: #FFF;
-    min-width: 500px;
-    outline: none;
-    resize: none;
-    height: auto;
-    font-size: unset;
 }
 
 /*here*/
@@ -89,4 +49,9 @@ textarea {
     max-width: 100%;
     height: auto;
     margin-top: 20px;
+}
+
+.CodeMirror{
+    height: 100% !important;
+    background-color: #e4e3e3 !important;
 }

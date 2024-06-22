@@ -21,9 +21,8 @@ function fullscreen(){
 }
 
 // toggle color
-let isOriginalColor=true;
 
-function changeBackgroundColor(selectors, newColor,originalColor) {
+function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor) {
     // 遍历选择器数组
     selectors.forEach(selector => {
         // 获取所有匹配的元素
@@ -37,10 +36,13 @@ function changeBackgroundColor(selectors, newColor,originalColor) {
             }
         });
     });
-    isOriginalColor=!isOriginalColor;
 }
 
+let isOriginalColor = true;
 document.getElementById('titlebar-background').addEventListener('click',()=>{
     // toggle background  look css /*here
-    changeBackgroundColor(['.bottom-section','input'],'#8f9092','#252526');
+    changeBackgroundColor(['.titlebar'],'#8f9092','#329ea3',isOriginalColor);
+    changeBackgroundColor(['.footer'],'#8f9092','#1e1e1e',isOriginalColor);
+    
+    isOriginalColor=!isOriginalColor;
 })

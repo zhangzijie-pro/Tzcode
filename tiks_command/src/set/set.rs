@@ -1,7 +1,7 @@
 use crate::commands::command::{get_time, HISTROY};
 use chrono::{DateTime, Datelike, Local, Timelike};
 
-use std::{fs::OpenOptions, io::Write, path::Path, time::Duration};
+use std::{fs::OpenOptions, io::Write, path::{Path, PathBuf}, time::Duration};
 
 pub fn get_last(index: usize) -> (usize,Option<String>){
     let len = HISTROY.lock().unwrap().len();
@@ -139,4 +139,8 @@ pub fn error_log(err: String){
 pub fn home_dir() -> String{
     let binding= dirs::home_dir().unwrap();
     binding.as_os_str().to_str().map(|x| x.to_string()).unwrap()
+}
+
+pub fn desktop_dir() -> PathBuf{
+    dirs::desktop_dir().unwrap()
 }

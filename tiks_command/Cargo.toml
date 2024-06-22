@@ -34,6 +34,10 @@ async-std = { version = "1.10", features = ["attributes"] }
 term_size = "0.3.0"
 termion = "3.0.0"
 
+[[bin]]
+name = "tiks"
+path = "bin/main.rs"
+
 [build]
 target_name = "tiks"
 

@@ -15,6 +15,7 @@ pub use crate::start::*;
 pub use crate::tauri_func::run_command;
 pub use crate::commands::command::{HISTROY,history_push,pwd,whoami,get_time};
 pub use crate::set::set::home_dir;
+pub use crate::set::set::desktop_dir;
 
 pub mod init_shell{
     use std::collections::HashMap;
