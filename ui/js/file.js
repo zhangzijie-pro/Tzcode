@@ -11,6 +11,8 @@ let config = {
     workspace: []
 };
 
+let current_folder = "";
+
 // 添加工作区文件夹
 async function fetchFiles(path = '', parentElement = null) {
     try {
@@ -29,6 +31,7 @@ async function fetchFiles(path = '', parentElement = null) {
                     if (listItem.classList.contains('collapsed')) {
                         listItem.classList.remove('collapsed');
                         listItem.classList.add('expanded');
+                        listItem.style.backgroundColor="#3c3c3c";
 
                         const existingUl = listItem.querySelector('ul');
                         if (existingUl) {
@@ -36,9 +39,12 @@ async function fetchFiles(path = '', parentElement = null) {
                         }
 
                         await fetchFiles(`${path}/${name}`, listItem);
+                        current_folder = `${path}/${name}`;
+                        console.log("current open folder",current_folder);
                     } else {
                         listItem.classList.add('collapsed');
                         listItem.classList.remove('expanded');
+                        listItem.style.backgroundColor="";
 
                         const existingUl = listItem.querySelector('ul');
                         if (existingUl) {
@@ -50,17 +56,10 @@ async function fetchFiles(path = '', parentElement = null) {
                 listItem.classList.add('collapsed');
             } else {
                 listItem.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent context menu on file click
+                    event.stopPropagation(); // Prevent event propagation
                     openFile(`${path}/${name}`);
                 });
             }
-
-            // Add right-click menu
-            listItem.addEventListener('contextmenu', (event) => {
-                event.preventDefault(); // Prevent default right-click menu
-                removeExistingContextMenu(); // Remove existing context menu
-                showContextMenu(event.clientX, event.clientY, path, listItem, isDirectory);
-            });
 
             ulElement.appendChild(listItem);
         });
@@ -76,74 +75,6 @@ async function fetchFiles(path = '', parentElement = null) {
         console.error('Error fetching files:', error);
     }
 }
-
-// 去掉右键事件
-function removeExistingContextMenu() {
-    const existingMenu = document.querySelector('.context-menu');
-    if (existingMenu) {
-        existingMenu.remove();
-    }
-}
-
-// 列出右键事件
-async function showContextMenu(x, y, path, listItem, isDirectory) {
-    const contextMenu = document.createElement('div');
-    contextMenu.className = 'context-menu';
-    contextMenu.style.top = `${y}px`;
-    contextMenu.style.left = `${x}px`;
-
-    let menuOptions;
-    if (isDirectory) {
-        menuOptions = [
-            { label: 'New File', action: () => openFileAction(path, listItem) },
-            { label: 'New Folder', action: async () => await deleteFileAction(path, listItem, isDirectory) }
-            // Add more options for directories as needed
-        ];
-    } else {
-        menuOptions = [
-            { label: 'Open', action: () => openFileAction(path, listItem) },
-            { label: 'Delete', action: async () => await deleteFileAction(path, listItem, isDirectory) }
-            // Add more options for files as needed
-        ];
-    }
-
-    menuOptions.forEach(option => {
-        const menuItem = document.createElement('div');
-        menuItem.textContent = option.label;
-        menuItem.className = 'context-menu-item';
-        menuItem.addEventListener('click', () => {
-            option.action();
-            contextMenu.remove();
-        });
-        contextMenu.appendChild(menuItem);
-    });
-
-    document.body.appendChild(contextMenu);
-
-    // Close context menu on click outside
-    document.addEventListener('click', () => contextMenu.remove(), { once: true });
-}
-
-// right click 
-function openFileAction(o_path,listItem) {
-    const filePath = listItem.textContent;
-    const path = `${o_path}/${filePath}`
-    console.log('open file: ',path);
-    openFile(path);
-}
-
-async function deleteFileAction(o_path,listItem, isDirectory) {
-    const filePath = listItem.textContent;
-    const path = `${o_path}/${filePath}`
-    if (isDirectory) {
-        // Implement logic to delete a dir
-    } else {
-        // Implement logic to delete a file
-    }
-}
-
-
-
 
 // Editor 
 
@@ -252,40 +183,6 @@ function closeTab(filename) {
     }
 }
 
-// 得到语言的模式
-function getCodeMirrorMode(language) {
-    switch (language) {
-        case 'javascript':
-            return 'javascript';
-        case 'python':
-            return 'python';
-        case 'rust':
-            return 'rust';
-        case 'css':
-            return 'css';
-        case 'html':
-            return 'htmlmixed';
-        case 'shell':
-            return 'shell';
-        case 'java':
-            return 'clike';
-        case 'c':
-            return 'clike';
-        case 'yaml':
-        case 'yml':
-            return 'yaml';
-        case 'toml':
-            return 'toml';
-        case 'json':
-            return 'application/json';
-        case 'markdown':
-            return 'markdown';
-        // Add more cases as needed
-        default:
-            return 'plaintext';
-    }
-}
-
 // 更新x为。
 function updateTabCloseButton(filename, isModified) {
     const { closeButton } = openFiles[filename];
@@ -339,8 +236,8 @@ function checkForUnsavedChanges(filename) {
 // 保存文件
 async function save(filename) {
     if (openFiles[filename]) {
-        const { textarea, tab } = openFiles[filename];
-        const content = textarea.value;
+        const { editor, tab } = openFiles[filename];
+        const content = editor.getValue();
         const path = tab.dataset.fullPath;
 
         try {
@@ -391,6 +288,40 @@ function code_language(filename){
     return language
 }
 
+// 得到语言的模式
+function getCodeMirrorMode(language) {
+    switch (language) {
+        case 'javascript':
+            return 'javascript';
+        case 'python':
+            return 'python';
+        case 'rust':
+            return 'rust';
+        case 'css':
+            return 'css';
+        case 'html':
+            return 'htmlmixed';
+        case 'shell':
+            return 'shell';
+        case 'java':
+            return 'clike';
+        case 'c':
+            return 'clike';
+        case 'yaml':
+        case 'yml':
+            return 'yaml';
+        case 'toml':
+            return 'toml';
+        case 'json':
+            return 'application/json';
+        case 'markdown':
+            return 'markdown';
+        // Add more cases as needed
+        default:
+            return 'plaintext';
+    }
+}
+
 function updateFooterLanguage(language) {
     if (language) {
         fileLanguageElement.textContent = `{ } ${language}`;
@@ -399,4 +330,38 @@ function updateFooterLanguage(language) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', readWorkspaceConfig());
+document.addEventListener('DOMContentLoaded', async()=>readWorkspaceConfig());
+
+
+
+document.getElementById('create-file').addEventListener('click', async () => {
+    const filename = prompt('Please enter the file name:');
+    const fileName = current_folder+filename;
+    if (fileName) {
+        try {
+            await invoke('create_file', { fileName });
+            alert(`File ${fileName} created successfully!`);
+        } catch (error) {
+            console.error('Error creating file:', error);
+            alert('Failed to create file.');
+        }
+    } else {
+        alert('File name cannot be empty!');
+    }
+});
+
+document.getElementById('create-dir').addEventListener('click', async () => {
+    const filename = prompt('Please enter the folder name:');
+    const fileName = current_folder+filename;
+    if (fileName) {
+        try {
+            await invoke('create_dir', { fileName });
+            alert(`File ${fileName} created successfully!`);
+        } catch (error) {
+            console.error('Error creating folder:', error);
+            alert('Failed to create folder.');
+        }
+    } else {
+        alert('File name cannot be empty!');
+    }
+});

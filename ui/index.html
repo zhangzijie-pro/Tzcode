@@ -21,8 +21,8 @@
                 </div>
                 <div id="file-action" class="menu-size">文件(F)
                     <div class="dropdown-content">
-                        <div class="dropdown-item" onclick="newFile()">新建文件</div>
-                        <div class="dropdown-item underline" onclick="newDir()">新建文件夹</div>
+                        <div class="dropdown-item" id="create-file">新建文件</div>
+                        <div class="dropdown-item underline" id="create-dir">新建文件夹</div>
                         <div class="dropdown-item underline" onclick="saveCurrentFile()">保存文件</div>
                         <div class="dropdown-item" onclick="new_window()">新建窗口</div>
                     </div>
@@ -31,9 +31,6 @@
                     <div class="dropdown-content">
                         <div class="dropdown-item" onclick="undo()">撤销</div>
                         <div class="dropdown-item underline" onclick="redo()">重做</div>
-                        <div class="dropdown-item" onclick="cut()">剪切</div>
-                        <div class="dropdown-item" onclick="copy()">复制</div>
-                        <div class="dropdown-item" onclick="paste()">粘贴</div>
                     </div>
                 </div>
                 <div id="help" class="menu-size">帮助(H)

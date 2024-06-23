@@ -1,6 +1,7 @@
 use std::fs;
 use std::fs::File;
 use std::io::{Read, Write};
+use std::path::Path;
 use tauri::command;
 
 // 读取目录内容
@@ -117,4 +118,16 @@ pub fn get_file_language(filename:String) -> String{
     }else{
         String::from("unknow")
     }
+}
+
+#[command]
+pub fn create_file(filename: String) -> Result<(),String>{
+    let _ = File::create_new(Path::new(&filename)).expect("create error");
+    Ok(())
+}
+
+#[command]
+pub fn create_dir(filename: String) -> Result<(),String>{
+    let _ = fs::create_dir_all(Path::new(&filename)).expect("create error");
+    Ok(())
 }

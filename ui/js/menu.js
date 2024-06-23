@@ -23,11 +23,8 @@ function fullscreen(){
 // toggle color
 
 function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor) {
-    // 遍历选择器数组
     selectors.forEach(selector => {
-        // 获取所有匹配的元素
         var elements = document.querySelectorAll(selector);
-        // 遍历每个元素并修改其背景颜色
         elements.forEach(element => {
             if (isOriginalColor) {
                 element.style.backgroundColor = newColor;
@@ -40,7 +37,6 @@ function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor
 
 let isOriginalColor = true;
 document.getElementById('titlebar-background').addEventListener('click',()=>{
-    // toggle background  look css /*here
     changeBackgroundColor(['.titlebar'],'#8f9092','#329ea3',isOriginalColor);
     changeBackgroundColor(['.footer'],'#8f9092','#1e1e1e',isOriginalColor);
     
