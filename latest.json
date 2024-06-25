@@ -1,8 +1,23 @@
 {
-    "version":"1.0.0",
-    "note":"Init release of application",
-    "pub_date":"",
-    "platforms":{
-        
+    "version": "v1.0.0",
+    "notes": "Test version",
+    "pub_date": "2024-06-26T19:25:57Z",
+    "platforms": {
+      "darwin-x86_64": {
+        "signature": "Content of app.tar.gz.sig",
+        "url": "https://https://github.com/zhangzijie-pro/Tzcode/releases/download/v1.0.0/app-x86_64.app.tar.gz"
+      },
+      "darwin-aarch64": {
+        "signature": "Content of app.tar.gz.sig",
+        "url": "https://https://github.com/zhangzijie-pro/Tzcode/releases/download/v1.0.0/app-aarch64.app.tar.gz"
+      },
+      "linux-x86_64": {
+        "signature": "Content of app.AppImage.tar.gz.sig",
+        "url": "https://https://github.com/zhangzijie-pro/Tzcode/releases/download/v1.0.0/app-amd64.AppImage.tar.gz"
+      },
+      "windows-x86_64": {
+        "signature": "Content of app-setup.nsis.sig or app.msi.sig, depending on the chosen format",
+        "url": "https://https://github.com/zhangzijie-pro/Tzcode/releases/download/v1.0.0/app-x64-setup.nsis.zip"
+      }
     }
-}
+  }
