@@ -7,11 +7,38 @@
     <link rel="stylesheet" href="./css/setting/setting.css">
 </head>
 <body>
+    <div data-tauri-drag-region class="titlebar">
+        <div class="titlebar-button" id="titlebar-minimize">
+          <img
+            src="https://api.iconify.design/mdi:window-minimize.svg"
+            alt="minimize"
+          />
+        </div>
+        <div class="titlebar-button" id="titlebar-maximize">
+          <img
+            src="https://api.iconify.design/mdi:window-maximize.svg"
+            alt="maximize"
+          />
+        </div>
+        <div class="titlebar-button" id="titlebar-close">
+          <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
+        </div>
+    </div>
+
     <h3 class="font">Setting</h3>
-    <button id="send-btn">Send to Python</button>
-    <button id="save-btn">Save to JSON</button>
-    <div id="output"></div>
+    <select id="data-select">
+        <option value="workspace">Workspace</option>
+        <option value="key">Key</option>
+    </select>
+    <button id="get-data-btn">Get JSON</button>
+    <button id="receive-message-btn">Receive Local Message</button>
+    <input type="text" id="user-input" placeholder="Enter something">
+    <button id="send-input-btn">Send Input</button>
+    <input type="text" id="delete-index" placeholder="Enter index to delete">
+    <button id="delete-input-btn">Delete Input</button>
+    <pre id="output"></pre>
     
     <script src="./js/setting.js" defer></script>
+    <script src="./js/menu.js" defer></script>
 </body>
 </html>

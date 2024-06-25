@@ -1,5 +1,6 @@
 {
     "key":{
-        
+        "save_file":"ctrl+s",
+        "close_tab":"ctrl+w"
     }
 }

@@ -16,6 +16,7 @@ let current_folder = "";
 // 添加工作区文件夹
 async function fetchFiles(path = '', parentElement = null) {
     try {
+        current_folder=path;
         // Read directory content
         const files = await invoke('read_directory', { path });
         const ulElement = document.createElement('ul');
@@ -336,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async()=>readWorkspaceConfig());
 
 document.getElementById('create-file').addEventListener('click', async () => {
     const filename = prompt('Please enter the file name:');
-    const fileName = current_folder+filename;
+    const fileName = current_folder+"\\"+filename;
     if (fileName) {
         try {
             await invoke('create_file', { fileName });
@@ -357,6 +358,7 @@ document.getElementById('create-dir').addEventListener('click', async () => {
         try {
             await invoke('create_dir', { fileName });
             alert(`File ${fileName} created successfully!`);
+            await fresh_file();
         } catch (error) {
             console.error('Error creating folder:', error);
             alert('Failed to create folder.');
@@ -365,3 +367,9 @@ document.getElementById('create-dir').addEventListener('click', async () => {
         alert('File name cannot be empty!');
     }
 });
+
+async function fresh_file(){
+    if (currentPath) {
+        fetchFiles(currentPath);
+    }
+}

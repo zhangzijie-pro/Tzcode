@@ -121,9 +121,11 @@ pub fn get_file_language(filename:String) -> String{
 }
 
 #[command]
-pub fn create_file(filename: String) -> Result<(),String>{
-    let _ = File::create_new(Path::new(&filename)).expect("create error");
-    Ok(())
+pub fn create_file(filename: String) -> Result<(), String> {
+    match File::create(Path::new(&filename)) {
+        Ok(_) => Ok(()),
+        Err(e) => Err(format!("Failed to create file: {}", e)),
+    }
 }
 
 #[command]
