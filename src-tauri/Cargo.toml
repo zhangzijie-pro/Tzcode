@@ -1,6 +1,6 @@
 [package]
 name = "Tzcode"
-version = "1.0.0"
+version = "0.1.0"
 description = "Tzdoe"
 authors = ["Zhangzijie <zzj01262022@163.com>"]
 repository = "https://github.com/zhangzijie-pro/Tzcode.git"

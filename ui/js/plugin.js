@@ -14,14 +14,14 @@ document.addEventListener('keydown', async(event) => {
         const isFullscreen = await appWindow.isFullscreen();
         appWindow.setFullscreen(!isFullscreen);
     }
-/*     if(event.ctrlKey && event.key=='1'){
+    if(event.ctrlKey && event.key=='q'){
         event.preventDefault();
         menu_forward();
     }
-    if(event.ctrlKey && event.key=='2'){
+    if(event.ctrlKey && event.key=='e'){
         event.preventDefault();
         menu_back();
-    } */
+    }
 });
 
 // Save active file
