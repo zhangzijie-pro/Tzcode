@@ -14,3 +14,15 @@ src-tauri:
 
 
 setting: use py to change file and check content of file
+
+setup-tree:
+
+Tzcode
+├── setup.ini
+├── Tiks
+│   ├── bin
+│   │   └──tiks.exe
+│   ├── error.log
+│   └── user
+├── .Tzocde
+│   └── ...

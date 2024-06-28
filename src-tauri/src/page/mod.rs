@@ -30,7 +30,7 @@ pub mod new_window{
         )
         .title("setting")
         .fullscreen(false)
-        .resizable(true)
+        .resizable(false)
         .decorations(false)
         .inner_size(300.0, 250.0)
         .visible(true)

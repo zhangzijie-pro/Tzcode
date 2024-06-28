@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::api::dialog::message;
-use tauri::{generate_context, generate_handler};
+use tauri::{generate_context, generate_handler, WindowEvent};
 
 mod page;
 mod tests;
@@ -12,6 +12,8 @@ mod splashscreen;
 
 use std::process::Command;
 use tauri::Manager;
+use std::sync::Arc;
+use std::sync::Mutex;
 use splashscreen::close_init;
 use page::file::*;
 use page::terimal::{pwd_tauri,whoami_tauri,run_command};
@@ -29,11 +31,12 @@ fn main() {
     Command::new("../target/release/tiks").status().expect("Failed run");
   }
 
-  let _python_server = Command::new("python")
+  let python_server = Command::new("python")
   .arg("../py/server.py")
   .spawn()
   .expect("Failed to start Python server");
 
+  let python_server = Arc::new(Mutex::new(python_server));
   
   tauri::Builder::default()
     .setup({
@@ -41,17 +44,52 @@ fn main() {
         let main_window = app.get_window("main").unwrap();
 
         // 添加更新检查逻辑
+        let main_window_clone = main_window.clone();
+        let main_window_clone_2 = main_window_clone.clone();
+
         let app_handle = app.handle().clone();
+
+        let app_handle_2 = app_handle.clone();
+
         tauri::async_runtime::spawn(async move {
           match app_handle.updater().check().await {
             Ok(update) => {
               if update.is_update_available() {
-                message(Some(&main_window), "Update Available", "A new version is available. It will be installed when you restart the application.");
+                message(Some(&main_window_clone), "Update Available", "A new version is available. It will be installed when you restart the application.");
                 update.download_and_install().await.unwrap();
               }
             },
             Err(e) => {
               eprintln!("Failed to check for updates: {}", e);
+            }
+          }
+        });
+
+
+        main_window.on_window_event({
+          move |event| {
+            let app_handle = app_handle_2.clone();
+            if let WindowEvent::CloseRequested { api, .. } = event {
+              let mut server = python_server.lock().unwrap();
+              server.kill().expect("Failed to kill Python server");
+              api.prevent_close();
+
+              // 提示用户是否要更新并关闭应用
+              tauri::api::dialog::ask(
+                Some(&main_window_clone_2),
+                "Confirm Exit",
+                "Do you want to update and close the application?",
+                move |response| {
+                  if response {
+                    tauri::async_runtime::spawn(async move {
+                      app_handle.updater().should_install(|_current, _latest| true);
+                    });
+                  } else {
+                    // 仅关闭应用而不更新
+                    app_handle.exit(0);
+                  }
+                },
+              );
             }
           }
         });

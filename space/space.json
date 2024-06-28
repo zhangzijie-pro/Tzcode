@@ -1,26 +1,23 @@
 {
     "workspace": {
-        "back-color": "black",
-        "font-family": "Arial, sans-serif",
-        "file_dir":{
-            "width":"20%",
-            "background-color":"#1e1e1e"
-        },
-        "main-content":{
-            "editor":{
-                "height-flex":"9",
-                "background-color":"#1e1e1e",
-                "font-size":"unset",
-                "top-tab":{
-                    "background-color":"#gray"
-                }
+        "background":{
+            "menu":{
+                ".titlebar":"#8f9092"
+            },
+            "footer":{
+                ".footer":"#8f9092"
             },
             "terimal":{
-                "height-flex":"0.95",
-                "background-color":"#1e1e1e",
-                "font-size":"samller",
-                "font-weight":"normal",
-                "font-family":" "
+                "['.bottom-section','input']":""
+            },
+            "code-editor":{
+                ".CodeMirror":""
+            },
+            "left-file":{
+                ".left-file":""
+            },
+            "right":{
+                "['.right-file','.sidebar']":""
             }
         }
     }

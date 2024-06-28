@@ -97,6 +97,16 @@ function extractFilename(path) {
     return path.split('/').pop().split('\\').pop();
 }
 
+// 显示行列数
+function updateCursorPosition(editor) {
+    const cursor = editor.getCursor();
+    const line = cursor.line + 1;  // CodeMirror 的行从 0 开始计数
+    const column = cursor.ch + 1;  // CodeMirror 的列从 0 开始计数
+    const position = `Line: ${line}, Column: ${column}`;
+    document.getElementById('cursorPosition').innerText = position;
+}
+
+
 // 创建每一个窗口的Tab
 async function createTab(path, content = '') {
     const filename = extractFilename(path);
@@ -153,6 +163,10 @@ async function createTab(path, content = '') {
         updateTabCloseButton(filename, isModified);
     });
 
+    editor.on('cursorActivity', () => {
+        updateCursorPosition(editor);
+    });
+
     editor.on('keydown', (editor, event) => {
         if (event.key === 'Tab') {
             const doc = editor.getDoc();
@@ -164,6 +178,7 @@ async function createTab(path, content = '') {
 
     switchTab(filename);
     hideInitialPage();
+    updateCursorPosition(editor);  // 初始化时显示光标位置
 }
 
 // 关闭文件
@@ -335,6 +350,7 @@ document.addEventListener('DOMContentLoaded', async()=>readWorkspaceConfig());
 
 
 
+// create file
 document.getElementById('create-file').addEventListener('click', async () => {
     const filename = prompt('Please enter the file name:');
     const fileName = current_folder+"\\"+filename;

@@ -2,7 +2,7 @@
 setlocal
 
 @rem 获取用户主目录路径
-set "HOME_DIR=%USERPROFILE%"
+set "HOME_DIR=%USERPROFILE%\Tzcode"
 
 @rem 设置 .Tiks 文件夹路径
 set "TIKS_DIR=%HOME_DIR%\.Tiks"

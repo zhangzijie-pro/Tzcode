@@ -60,7 +60,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": [],
+      "resources": ["../py","../sh","../space"],
       "shortDescription": "",
       "targets": "all",
       "windows": {

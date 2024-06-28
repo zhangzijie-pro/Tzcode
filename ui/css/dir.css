@@ -51,6 +51,8 @@
 
 .left-button {
     cursor: pointer;
+    height: 4%;
+    margin-bottom: 100%;
 }
 
 .left-button:hover {

@@ -15,10 +15,6 @@ document.getElementById('titlebar-close').addEventListener('click', () => {
     appWindow.close()
 });
 
-// tauri.conf.json -> winodw -> setfullscreen: true
-function fullscreen(){
-    appWindow.isFullscreen();
-}
 
 // toggle color
 
@@ -39,6 +35,11 @@ let isOriginalColor = true;
 document.getElementById('titlebar-background').addEventListener('click',()=>{
     changeBackgroundColor(['.titlebar'],'#8f9092','#329ea3',isOriginalColor);
     changeBackgroundColor(['.footer'],'#8f9092','#1e1e1e',isOriginalColor);
+    changeBackgroundColor(['.bottom-section','input'],'','#252526',isOriginalColor);
+    changeBackgroundColor(['.CodeMirror'],'','#e4e3e3 !important',isOriginalColor);
+    changeBackgroundColor(['.initial-page','.top-section'],'','#1e1e1e',isOriginalColor);
+    changeBackgroundColor(['.left-file'],'#fff','#3c3c3c',isOriginalColor);
+    changeBackgroundColor(['.right-file','.sidebar'],'#ff1','#2c2c2c',isOriginalColor);
     
     isOriginalColor=!isOriginalColor;
 })
