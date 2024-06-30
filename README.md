@@ -7,6 +7,8 @@ webview的框架是[**tauri**](https://tauri.app/zh-cn/v1/guides/)
 
 ## [环境搭建](./set_env.md)
 
+## [产品样式/图片](./img/product/main.png)
+
 ```sh
 RUN:
     cargo tauri dev

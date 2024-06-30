@@ -1,11 +1,11 @@
 var color = {};
 
-export var rightfileValue="";
-export var codeEditorValue = "";
-export var footerValue = "";
-export var leftfileValue="";
-export var menuValue="";
-export var terimalValue = "";
+var rightfileValue="";
+var codeEditorValue = "";
+var footerValue = "";
+var leftfileValue="";
+var menuValue="";
+var terimalValue = "";
 
 function get_setting_color(json_color){
     const jsonObject = JSON.parse(json_color);
@@ -41,7 +41,6 @@ document.getElementById("get-data-btn").addEventListener("click", async () => {
         const text = JSON.stringify(data, null, 2);
         console.log(text);
         color=text;
-        get_setting_color(color); // get json color
         document.getElementById("output").innerText = text;
     } catch (error) {
         console.error(`Error fetching ${selected}:`, error);
