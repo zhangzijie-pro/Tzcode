@@ -17,6 +17,7 @@ document.getElementById('titlebar-close').addEventListener('click', () => {
 
 
 // toggle color
+import {rightfileValue,leftfileValue,codeEditorValue,terimalValue,menuValue,footerValue} from "../js/setting"
 
 function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor) {
     selectors.forEach(selector => {
@@ -31,15 +32,30 @@ function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor
     });
 }
 
+function change_color(rfv,lfv,ce,tl,menu,ft,isOriginalColor){
+    changeBackgroundColor(['.titlebar'],menu,'#329ea3',isOriginalColor);
+    changeBackgroundColor(['.footer'],ft,'#1e1e1e',isOriginalColor);
+    changeBackgroundColor(['.bottom-section','input'],tl,'#252526',isOriginalColor);
+    changeBackgroundColor(['.CodeMirror'],ce,'#e4e3e3 !important',isOriginalColor);
+    changeBackgroundColor(['.initial-page','.top-section'],ce,'#1e1e1e',isOriginalColor);
+    changeBackgroundColor(['.left-file'],lfv,'#3c3c3c',isOriginalColor);
+    changeBackgroundColor(['.right-file','.sidebar'],rfv,'#2c2c2c',isOriginalColor);
+}
+
 let isOriginalColor = true;
 document.getElementById('titlebar-background').addEventListener('click',()=>{
-    changeBackgroundColor(['.titlebar'],'#8f9092','#329ea3',isOriginalColor);
+/*     changeBackgroundColor(['.titlebar'],'#8f9092','#329ea3',isOriginalColor);
     changeBackgroundColor(['.footer'],'#8f9092','#1e1e1e',isOriginalColor);
     changeBackgroundColor(['.bottom-section','input'],'','#252526',isOriginalColor);
     changeBackgroundColor(['.CodeMirror'],'','#e4e3e3 !important',isOriginalColor);
     changeBackgroundColor(['.initial-page','.top-section'],'','#1e1e1e',isOriginalColor);
     changeBackgroundColor(['.left-file'],'#fff','#3c3c3c',isOriginalColor);
-    changeBackgroundColor(['.right-file','.sidebar'],'#ff1','#2c2c2c',isOriginalColor);
+    changeBackgroundColor(['.right-file','.sidebar'],'#ff7','#2c2c2c',isOriginalColor);
     
+    isOriginalColor=!isOriginalColor; */
+    change_color(rightfileValue,leftfileValue,codeEditorValue,terimalValue,menuValue,footerValue,isOriginalColor);
     isOriginalColor=!isOriginalColor;
+    console.log(rightfileValue);
+
 })
+

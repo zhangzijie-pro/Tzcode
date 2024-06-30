@@ -26,3 +26,6 @@ Tzcode
 │   └── user
 ├── .Tzocde
 │   └── ...
+
+example release:
+    /zhangzijie-pro/Tiks/releases/download/1.0.0/tiks -> /usrname/productname/releases/download/{target-os}/{version}/app(linux binary or window exe)

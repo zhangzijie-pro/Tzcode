@@ -7,38 +7,36 @@
     <link rel="stylesheet" href="./css/setting/setting.css">
 </head>
 <body>
-    <div data-tauri-drag-region class="titlebar">
-        <div class="titlebar-button" id="titlebar-minimize">
-          <img
-            src="https://api.iconify.design/mdi:window-minimize.svg"
-            alt="minimize"
-          />
-        </div>
-        <div class="titlebar-button" id="titlebar-maximize">
-          <img
-            src="https://api.iconify.design/mdi:window-maximize.svg"
-            alt="maximize"
-          />
-        </div>
-        <div class="titlebar-button" id="titlebar-close">
-          <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
-        </div>
-    </div>
 
+
+    <!-- home -->
     <h3 class="font">Setting</h3>
     <select id="data-select">
-        <option value="workspace">Workspace</option>
-        <option value="key">Key</option>
+      <option value="workspace">Workspace</option>
+      <option value="key">Key</option>
+      <option value="space-color">Space Color</option>
     </select>
+    <div id="workspace-section" class="hidden">
+        <input type="text" id="workspace-input" placeholder="Enter value">
+        <button id="add-workspace-btn">Add to Workspace</button>
+        <input type="text" id="workspace-delete-index" placeholder="Enter index to delete">
+        <button id="delete-workspace-btn">Delete from Workspace</button>
+    </div>
+    <div id="key-section" class="hidden">
+        <input type="text" id="key-input" placeholder="Enter value">
+        <button id="add-key-btn">Add to Key</button>
+        <input type="text" id="key-delete-index" placeholder="Enter index to delete">
+        <button id="delete-key-btn">Delete from Key</button>
+    </div>
+    <div id="space-color-section" class="hidden">
+        <input type="text" id="space-color-key" placeholder="Enter nested keys (comma-separated)">
+        <input type="text" id="space-color-input" placeholder="Enter new color value">
+        <button id="update-space-color-btn">Update Space Color</button>
+    </div>
     <button id="get-data-btn">Get JSON</button>
-    <button id="receive-message-btn">Receive Local Message</button>
-    <input type="text" id="user-input" placeholder="Enter something">
-    <button id="send-input-btn">Send Input</button>
-    <input type="text" id="delete-index" placeholder="Enter index to delete">
-    <button id="delete-input-btn">Delete Input</button>
     <pre id="output"></pre>
+
     
     <script src="./js/setting.js" defer></script>
-    <script src="./js/menu.js" defer></script>
 </body>
 </html>

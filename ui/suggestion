@@ -10,9 +10,6 @@ task:
     11. right click update  -> Done!
     5. add button to toggle background-color -> Done!
 
-
-    8. code completion
-    9. code formatting
     12. update this app
 
 
@@ -20,7 +17,9 @@ bug:
     1. Can not show png ...picture           -> bug Canel
     2. textarea width can not show more     -> Done!
     3. remind user this file is change or save file   -> Done!
-
+    4. color json to toggle background color 
+    5  can not create new file or floder
+    6. workspace
 
 
 build exe: 
