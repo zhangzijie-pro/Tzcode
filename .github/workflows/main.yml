@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - name: Checkout code
@@ -39,8 +39,6 @@ jobs:
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/msi/*.msi
-          elif [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-            tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/appimage/*.AppImage
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/dmg/*.dmg
           fi
@@ -63,15 +61,11 @@ jobs:
           asset_path: |
             src-tauri/target/release/bundle/msi/*.msi
             src-tauri/target/release/bundle/msi/*.sig
-            src-tauri/target/release/bundle/appimage/*.AppImage
-            src-tauri/target/release/bundle/appimage/*.sig
             src-tauri/target/release/bundle/dmg/*.dmg
             src-tauri/target/release/bundle/dmg/*.sig
           asset_name: |
             $(basename src-tauri/target/release/bundle/msi/*.msi)
             $(basename src-tauri/target/release/bundle/msi/*.sig)
-            $(basename src-tauri/target/release/bundle/appimage/*.AppImage)
-            $(basename src-tauri/target/release/bundle/appimage/*.sig)
             $(basename src-tauri/target/release/bundle/dmg/*.dmg)
             $(basename src-tauri/target/release/bundle/dmg/*.sig)
           asset_content_type: application/octet-stream
