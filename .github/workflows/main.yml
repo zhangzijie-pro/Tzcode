@@ -2,40 +2,40 @@ name: Build and Release Tauri App
 
 on:
   push:
-    tags:
-      - 'v*' # 触发条件：当推送符合 v* 模式的标签时触发
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest] # 定义构建的平台
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3 # 检出代码
+        uses: actions/checkout@v3
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          override: true # 设置 Rust 工具链
+          override: true
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16' # 安装 Node.js
+          node-version: '16'
 
       - name: Install Tauri CLI
-        run: npm install -g @tauri-apps/cli # 安装 Tauri CLI
+        run: npm install -g @tauri-apps/cli
 
       - name: Build Tauri App
-        run: cargo tauri build # 构建 Tauri 应用
+        run: cargo tauri build
 
       - name: Sign Tauri App
         env:
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }} # 使用秘密环境变量存储的私钥
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/msi/*.msi
@@ -43,35 +43,35 @@ jobs:
             tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/appimage/*.AppImage
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             tauri signer sign -p <(echo "$TAURI_PRIVATE_KEY") -f src-tauri/target/release/bundle/dmg/*.dmg
-          fi # 对不同平台的构建产物进行签名
+          fi
 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 使用秘密环境变量存储的 GitHub token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }} # 使用推送的标签名作为 Release 名称
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
           draft: false
-          prerelease: false # 创建 GitHub Release
+          prerelease: false
 
       - name: Upload Release Assets
         uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # 使用创建的 Release 的上传 URL
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: |
             src-tauri/target/release/bundle/msi/*.msi
             src-tauri/target/release/bundle/msi/*.sig
             src-tauri/target/release/bundle/appimage/*.AppImage
             src-tauri/target/release/bundle/appimage/*.sig
             src-tauri/target/release/bundle/dmg/*.dmg
-            src-tauri/target/release/bundle/dmg/*.sig # 上传不同平台的构建产物
+            src-tauri/target/release/bundle/dmg/*.sig
           asset_name: |
             $(basename src-tauri/target/release/bundle/msi/*.msi)
             $(basename src-tauri/target/release/bundle/msi/*.sig)
             $(basename src-tauri/target/release/bundle/appimage/*.AppImage)
             $(basename src-tauri/target/release/bundle/appimage/*.sig)
             $(basename src-tauri/target/release/bundle/dmg/*.dmg)
-            $(basename src-tauri/target/release/bundle/dmg/*.sig) # 指定上传的文件名
-          asset_content_type: application/octet-stream # 设置文件类型
+            $(basename src-tauri/target/release/bundle/dmg/*.sig)
+          asset_content_type: application/octet-stream
