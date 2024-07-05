@@ -288,6 +288,7 @@ async function readWorkspaceConfig() {
     try {
         const res = await invoke("read_workspace_config");
         config = res;
+        console.log(config);
         // 将数组中的第一个元素赋值给 currentPath
         if (config.workspace.length > 0) {
             currentPath = config.workspace[0];

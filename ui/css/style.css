@@ -27,7 +27,7 @@ body ,html{
     padding: 10px;
     overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .main-content {
@@ -64,7 +64,7 @@ li {
     padding: 5px;
 }
 
-.top-section,.bottom-section,.sidebar{
+.top-section,.bottom-section{
     overflow-y: scroll;
 }
 

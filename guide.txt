@@ -27,5 +27,9 @@ Tzcode
 ├── .Tzocde
 │   └── ...
 
+update json web: 
+        "https://gist.githubusercontent.com/zhangzijie-pro/3614b79c71445345354a89c4396c23b0/raw/387fe2e0497e5410cddb227c36c33c759d92e176/lastest.json"
+
+
 example release:
     /zhangzijie-pro/Tiks/releases/download/1.0.0/tiks -> /usrname/productname/releases/download/{target-os}/{version}/app(linux binary or window exe)

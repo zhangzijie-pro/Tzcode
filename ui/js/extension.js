@@ -10,6 +10,7 @@ document.getElementById('home-file').addEventListener('click', function() {
 
     document.getElementById('fileList').style.display = 'block';
     document.getElementById('searchContainer').style.display = 'none';
+    document.getElementById('user_send').style.display = 'none';
 });
 
 document.getElementById('search-file').addEventListener('click', function() {
@@ -19,6 +20,8 @@ document.getElementById('search-file').addEventListener('click', function() {
 
     document.getElementById('fileList').style.display = 'none';
     document.getElementById('searchContainer').style.display = 'flex';
+    document.getElementById('user_send').style.display = 'none';
+
 });
 
 document.getElementById('user-group').addEventListener('click', function() {
@@ -29,6 +32,7 @@ document.getElementById('user-group').addEventListener('click', function() {
     document.getElementById('fileList').style.display = 'none';
     document.getElementById('searchContainer').style.display = 'none';
     document.getElementById('user-group').style.display='flex';
+    document.getElementById('user_send').style.display = 'flex';
 });
 
 document.getElementById('setting').addEventListener('click', async function(){

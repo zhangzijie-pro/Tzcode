@@ -17,7 +17,6 @@ document.getElementById('titlebar-close').addEventListener('click', () => {
 
 
 // toggle color
-import {rightfileValue,leftfileValue,codeEditorValue,terimalValue,menuValue,footerValue} from "../js/setting"
 
 function changeBackgroundColor(selectors, newColor,originalColor,isOriginalColor) {
     selectors.forEach(selector => {

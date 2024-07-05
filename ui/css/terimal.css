@@ -30,9 +30,7 @@ input {
   font-size: small;
 }
 
-.sidebar, .main-content {
-  font-size: calc(10px + 0.5vw);
-}
+
 
 .collapsed > ul {
   display: none;

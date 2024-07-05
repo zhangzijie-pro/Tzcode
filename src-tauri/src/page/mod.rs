@@ -17,6 +17,7 @@ pub mod new_window{
         .decorations(false)
         .inner_size(800.0, 600.0)
         .visible(true)
+        .center()
         .build()
         .expect("Failed to build window");
     }
@@ -34,6 +35,7 @@ pub mod new_window{
         .decorations(true)
         .inner_size(300.0, 250.0)
         .visible(true)
+        .center()
         .build()
         .expect("Failed to build window");
     }

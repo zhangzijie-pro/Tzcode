@@ -66,10 +66,7 @@
     margin: 10px;
 }
 
-.sidebar {
-    display: flex;
-    flex-direction: row;
-}
+
 
 .left-file img {
     margin-bottom: 20px; /* Space between SVGs */

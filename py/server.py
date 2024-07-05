@@ -89,6 +89,17 @@ def update_space_color():
     write_json(space_color_path, data)
     return jsonify(data)
 
+@app.route('/workspace/swap', methods=['POST'])
+def swap_workspace():
+    index1 = int(request.json.get('index1'))
+    index2 = int(request.json.get('index2'))
+    data = read_json(workspace_path)
+    try:
+        data['workspace'][index1], data['workspace'][index2] = data['workspace'][index2], data['workspace'][index1]
+    except IndexError:
+        return jsonify({"error": "Invalid index"}), 400
+    write_json(workspace_path, data)
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)

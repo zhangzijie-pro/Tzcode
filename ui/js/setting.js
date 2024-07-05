@@ -22,7 +22,7 @@ document.getElementById("data-select").addEventListener("change", function () {
     document.getElementById("workspace-section").classList.add("hidden");
     document.getElementById("key-section").classList.add("hidden");
     document.getElementById("space-color-section").classList.add("hidden");
-    
+
     if (selected === "workspace") {
         document.getElementById("workspace-section").classList.remove("hidden");
     } else if (selected === "key") {
@@ -39,8 +39,6 @@ document.getElementById("get-data-btn").addEventListener("click", async () => {
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
         const text = JSON.stringify(data, null, 2);
-        console.log(text);
-        color=text;
         document.getElementById("output").innerText = text;
     } catch (error) {
         console.error(`Error fetching ${selected}:`, error);
@@ -49,7 +47,6 @@ document.getElementById("get-data-btn").addEventListener("click", async () => {
 
 document.getElementById("add-workspace-btn").addEventListener("click", async () => {
     const userInput = document.getElementById("workspace-input").value;
-
     try {
         const response = await fetch("http://127.0.0.1:5000/workspace", {
             method: "POST",
@@ -68,7 +65,6 @@ document.getElementById("add-workspace-btn").addEventListener("click", async () 
 
 document.getElementById("delete-workspace-btn").addEventListener("click", async () => {
     const deleteIndex = document.getElementById("workspace-delete-index").value;
-
     try {
         const response = await fetch("http://127.0.0.1:5000/workspace", {
             method: "DELETE",
@@ -85,9 +81,28 @@ document.getElementById("delete-workspace-btn").addEventListener("click", async 
     }
 });
 
+document.getElementById("swap-workspace-btn").addEventListener("click", async () => {
+    const index1 = document.getElementById("workspace-swap-index1").value;
+    const index2 = document.getElementById("workspace-swap-index2").value;
+    try {
+        const response = await fetch("http://127.0.0.1:5000/workspace/swap", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ index1: index1, index2: index2 })
+        });
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const data = await response.json();
+        fresh_file();
+        document.getElementById("output").innerText = JSON.stringify(data.workspace, null, 2);
+    } catch (error) {
+        console.error("Error swapping workspace paths:", error);
+    }
+});
+
 document.getElementById("add-key-btn").addEventListener("click", async () => {
     const userInput = document.getElementById("key-input").value;
-
     try {
         const response = await fetch("http://127.0.0.1:5000/key", {
             method: "POST",
@@ -106,7 +121,6 @@ document.getElementById("add-key-btn").addEventListener("click", async () => {
 
 document.getElementById("delete-key-btn").addEventListener("click", async () => {
     const deleteIndex = document.getElementById("key-delete-index").value;
-
     try {
         const response = await fetch("http://127.0.0.1:5000/key", {
             method: "DELETE",
@@ -124,16 +138,15 @@ document.getElementById("delete-key-btn").addEventListener("click", async () => 
 });
 
 document.getElementById("update-space-color-btn").addEventListener("click", async () => {
-    const nestedKeys = document.getElementById("space-color-key").value.split(',').map(key => key.trim());
+    const key = document.getElementById("space-color-key").value;
     const userInput = document.getElementById("space-color-input").value;
-
     try {
         const response = await fetch("http://127.0.0.1:5000/space-color", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ input: userInput, keys: nestedKeys })
+            body: JSON.stringify({ input: userInput, keys: [key] })
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();

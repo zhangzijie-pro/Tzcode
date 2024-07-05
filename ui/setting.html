@@ -7,35 +7,42 @@
     <link rel="stylesheet" href="./css/setting/setting.css">
 </head>
 <body>
-
-
     <!-- home -->
-    <h3 class="font">Setting</h3>
+    <h3 class="font">设置</h3>
     <select id="data-select">
-      <option value="workspace">Workspace</option>
-      <option value="key">Key</option>
-      <option value="space-color">Space Color</option>
+        <option value="workspace">工作区</option>
+        <option value="key">快捷键</option>
+        <option value="space-color">背景颜色</option>
     </select>
     <div id="workspace-section" class="hidden">
         <input type="text" id="workspace-input" placeholder="Enter value">
-        <button id="add-workspace-btn">Add to Workspace</button>
+        <button id="add-workspace-btn">添加工作区</button>
         <input type="text" id="workspace-delete-index" placeholder="Enter index to delete">
-        <button id="delete-workspace-btn">Delete from Workspace</button>
+        <button id="delete-workspace-btn">删除工作区</button>
+        <input type="number" id="workspace-swap-index1" placeholder="Enter first index">
+        <input type="number" id="workspace-swap-index2" placeholder="Enter second index">
+        <button id="swap-workspace-btn">切换工作区</button>
     </div>
     <div id="key-section" class="hidden">
         <input type="text" id="key-input" placeholder="Enter value">
-        <button id="add-key-btn">Add to Key</button>
+        <button id="add-key-btn">添加快捷键</button>
         <input type="text" id="key-delete-index" placeholder="Enter index to delete">
-        <button id="delete-key-btn">Delete from Key</button>
+        <button id="delete-key-btn">删除快捷键</button>
     </div>
     <div id="space-color-section" class="hidden">
-        <input type="text" id="space-color-key" placeholder="Enter nested keys (comma-separated)">
-        <input type="text" id="space-color-input" placeholder="Enter new color value">
-        <button id="update-space-color-btn">Update Space Color</button>
+        <select id="space-color-key">
+            <option value="menu">Menu</option>
+            <option value="footer">Footer</option>
+            <option value="terminal">Terminal</option>
+            <option value="code-editor">Code Editor</option>
+            <option value="left-file">Left File</option>
+            <option value="right-file">Right File</option>
+        </select>
+        <input type="color" id="space-color-input">
+        <button id="update-space-color-btn">更新</button>
     </div>
-    <button id="get-data-btn">Get JSON</button>
+    <button id="get-data-btn">得到json</button>
     <pre id="output"></pre>
-
     
     <script src="./js/setting.js" defer></script>
 </body>
