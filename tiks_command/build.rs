@@ -5,4 +5,6 @@ fn main(){
     cc::Build::new()
         .file("./src/c_build/c/example.c")
         .compile("hello");
+
+    println!("cargo:rerun-if-changed=build.rs");
 }
