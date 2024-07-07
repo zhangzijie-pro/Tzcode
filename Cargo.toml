@@ -1,5 +1,0 @@
-[workspace]
-members = ["tiks_command","src-tauri"]
-
-[workspace.package]
-version = "0.1.0"
