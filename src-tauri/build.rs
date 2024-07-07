@@ -4,7 +4,7 @@ use std::path::Path;
 fn main() {
   let tiks_command_path = "../tiks_command";
   let status = Command::new("cargo")
-  .args(&["build","--release", "--manifest-path", &format!("{}/Cargo.toml", tiks_command_path)])
+  .args(&["build", "--manifest-path", &format!("{}/Cargo.toml", tiks_command_path)])
   .status()
   .expect("Error: Can't build the tiks command");
 
@@ -12,7 +12,7 @@ fn main() {
     panic!("Failed to build tiks_command")
   }
 
-  let exe_path = Path::new("../").join("target/release/tiks.exe");
+  let exe_path = Path::new(tiks_command_path).join("target/debug/tiks.exe");
   
   // 设置环境变量
   println!("cargo:rustc-env=Tiks={}", exe_path.clone().display());
