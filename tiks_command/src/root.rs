@@ -112,7 +112,7 @@ impl SessionContext{
         let userstate = UserState::new(); //false
 
         let home_dir = dirs::home_dir().expect("Failed to get home directory");
-        let binding = home_dir.join(".Tiks").join("tiks");  // create dir in setup.sh
+        let binding = home_dir.join(".Tiks").join("user.ini");  // create dir in setup.sh
         let user_file_path = binding.as_os_str().to_str().unwrap();
 
         let user = match User::load_from_file(&user_file_path){
@@ -131,7 +131,7 @@ impl SessionContext{
                 }
             },
             Err(_) =>{
-                println!("Tiks::welcome-to-try\r\nplease add your account");
+                println!("Tiks -> welcome-to-try\r\nplease add your account");
                 #[cfg(target_os="linux")]
                 init_setup_linux();
                 #[cfg(target_os="macos")]
@@ -234,7 +234,7 @@ lazy_static!{
 #[cfg(target_os="linux")]
 fn init_setup_linux(){
     Command::new("bash")
-    .arg("./sh/mac_linux/setup.sh")
+    .arg("../sh/mac_linux/setup.sh")
     .spawn()
     .expect("Error: Can't setup");
 }
@@ -242,14 +242,14 @@ fn init_setup_linux(){
 #[cfg(target_os="macos")]
 fn init_setup_mac() {
     Command::new("bash")
-        .arg("./sh/mac_linux/setup.sh")
+        .arg("../sh/mac_linux/setup.sh")
         .spawn()
         .expect("Error: Can't setup on macOS");
 }
 
 #[cfg(target_os="windows")]
 fn init_setup_windows() {
-    Command::new("./sh/window/setup.bat")
+    Command::new("../sh/window/setup.bat")
         .spawn()
         .expect("Error: Can't setup on Windows");
 }

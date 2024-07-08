@@ -9,8 +9,8 @@ task:
     6. highlight code   -> Done!
     11. right click update  -> Done!
     5. add button to toggle background-color -> Done!
+    12. update this app    -> Done!
 
-    12. update this app
 
 
 bug: 
@@ -19,7 +19,7 @@ bug:
     3. remind user this file is change or save file   -> Done!
     4. color json to toggle background color 
     5  can not create new file or floder
-    6. workspace
+    6. workspace                            -> Done!
 
 
 build exe: 

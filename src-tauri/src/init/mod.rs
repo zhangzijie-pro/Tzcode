@@ -4,7 +4,7 @@ use tiks_command::home_dir;
 lazy_static!{
     pub static ref USER_FILE:String = {
         let home = home_dir();
-        format!("{}/.Tiks/tiks",home)
+        format!("{}/.Tiks/user.ini",home)
     };
 }
 

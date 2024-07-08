@@ -26,9 +26,9 @@ fn main() {
 
   if !response{
     #[cfg(target_os="windows")]
-    Command::new("../target/release/tiks.exe").status().expect("Failed run");
+    Command::new("../tiks_command/target/release/tiks.exe").status().expect("Failed run");
     #[cfg(not(windows))]
-    Command::new("../target/release/tiks").status().expect("Failed run");
+    Command::new("../tiks_command/target/release/tiks").status().expect("Failed run");
   }
 
   let python_server = Command::new("python")
