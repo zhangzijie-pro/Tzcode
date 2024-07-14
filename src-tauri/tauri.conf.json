@@ -12,7 +12,7 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false,
+      "all": true,
       "window": {
         "all": false,
         "close": true,
@@ -43,7 +43,7 @@
       "category": "DeveloperTool",
       "copyright": "",
       "deb": {
-        "depends": []
+        "depends": ["libssl1.1", "libgtk-3-0"]
       },
       "externalBin": [],
       "icon": [
@@ -60,13 +60,16 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": ["../py","../ui","../space","../tiks_command"],
+      "resources": ["../py/server.py","../space","../tiks_command"],
       "shortDescription": "",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "language": ["en-US", "zh-CN"]
+        }
       }
     },
     "security": {

@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use tauri::api::dialog::message;
-use tauri::{generate_context, generate_handler, WindowEvent};
+use tauri::{ generate_handler, WindowEvent};
 
 mod page;
 mod tests;
@@ -15,13 +15,16 @@ use tauri::Manager;
 use std::sync::Arc;
 use std::sync::Mutex;
 use splashscreen::close_init;
-use page::file::*;
+use page::{file::*, read_resource_dir};
 use page::terimal::{pwd_tauri,whoami_tauri,run_command};
 use extension::*;
 use page::new_window::*;
 use init::user::check_user_active;
 
 fn main() {
+  read_resource_dir();
+  let context = tauri::generate_context!("./tauri.conf.json");
+
   let response = check_user_active().is_ok();
 
   if !response{
@@ -97,6 +100,6 @@ fn main() {
       }
     })
     .invoke_handler(generate_handler![open_setting,open_new_window,read_directory, read_file, whoami_tauri,pwd_tauri,run_command,close_init,open_workspace,read_workspace_config,write_workspace_config,get_file_language,write_file,get_all_file,get_files_with_pattern,find_file,create_dir,create_file])
-    .run(generate_context!("./tauri.conf.json"))
+    .run(context)
     .expect("error while running tauri application");
 }

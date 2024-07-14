@@ -121,15 +121,17 @@ pub fn get_file_language(filename:String) -> String{
 }
 
 #[command]
-pub fn create_file(filename: String) -> Result<(), String> {
-    match File::create(Path::new(&filename)) {
+#[allow(non_snake_case)]
+pub fn create_file(fileName: String) -> Result<(), String> {
+    match File::create(Path::new(&fileName)) {
         Ok(_) => Ok(()),
         Err(e) => Err(format!("Failed to create file: {}", e)),
     }
 }
 
 #[command]
-pub fn create_dir(filename: String) -> Result<(),String>{
-    let _ = fs::create_dir_all(Path::new(&filename)).expect("create error");
+#[allow(non_snake_case)]
+pub fn create_dir(fileName: String) -> Result<(),String>{
+    let _ = fs::create_dir_all(Path::new(&fileName)).expect("create error");
     Ok(())
 }

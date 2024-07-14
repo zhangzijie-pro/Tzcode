@@ -359,6 +359,7 @@ document.getElementById('create-file').addEventListener('click', async () => {
         try {
             await invoke('create_file', { fileName });
             alert(`File ${fileName} created successfully!`);
+            await fresh_file();
         } catch (error) {
             console.error('Error creating file:', error);
             alert('Failed to create file.');

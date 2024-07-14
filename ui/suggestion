@@ -11,15 +11,22 @@ task:
     5. add button to toggle background-color -> Done!
     12. update this app    -> Done!
 
+    13. create file error
+    14. right mouse menu
+    15. user communication
+    16. python file pack
+    
 
 
 bug: 
-    1. Can not show png ...picture           -> bug Canel
+    1. Can not show png ...picture           -> bug Canel..
     2. textarea width can not show more     -> Done!
     3. remind user this file is change or save file   -> Done!
-    4. color json to toggle background color 
-    5  can not create new file or floder
+    5  can not create new file or floder        -> Done!
     6. workspace                            -> Done!
+
+    4. color json to toggle background color 
+
 
 
 build exe: 
