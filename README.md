@@ -1,5 +1,7 @@
 # Tzcode
 
+## 更新中，现只支持Windows
+
 终端命令来自于[**Tiks**](https://github.com/zhangzijie-pro/Tiks.git)
 命令解释说明可见于Tiks的[readme.md](./tiks_command/explain.md)
 

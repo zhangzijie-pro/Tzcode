@@ -11,10 +11,10 @@ task:
     5. add button to toggle background-color -> Done!
     12. update this app    -> Done!
 
-    13. create file error
-    14. right mouse menu
-    15. user communication
-    16. python file pack
+    14. create file error   
+    15. right mouse menu
+    16. user communication
+    17. python file pack
     
 
 
@@ -26,12 +26,3 @@ bug:
     6. workspace                            -> Done!
 
     4. color json to toggle background color 
-
-
-
-build exe: 
-    cargo tauri build -> 
-    修改 tauri.conf.json
-    打开 src-tauri/tauri.conf.json 文件
-    找到 tauri > bundle > identifier 配置项
-    将其更改为一个唯一的标识符。例如，使用你自己的域名或一个类似的标识符。通常的格式是 com.yourcompany.yourappname -> com.Tzcode.Tzcode1.0.0
