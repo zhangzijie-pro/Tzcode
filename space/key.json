@@ -1,6 +1,9 @@
 {
     "key":{
         "save_file":"ctrl+s",
-        "close_tab":"ctrl+w"
+        "close_tab":"ctrl+w",
+        "fullscreen":"F11",
+        "forward":"ctrl+q",
+        "back":"ctrl+e"
     }
 }

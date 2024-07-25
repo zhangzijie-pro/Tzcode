@@ -1,5 +1,5 @@
 const { invoke } = window.__TAURI__.tauri;
-
+import { fresh_file } from "./file";
 
 let currentPath = "";
 let config = {
@@ -46,6 +46,7 @@ async function handleButtonClick() {
 
         // 更新 JSON 文件
         await writeWorkspaceConfig();
+        fresh_file();
 
         // 更新页面显示
         document.getElementById('name').textContent = res;

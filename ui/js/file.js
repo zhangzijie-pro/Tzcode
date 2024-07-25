@@ -386,8 +386,10 @@ document.getElementById('create-dir').addEventListener('click', async () => {
     }
 });
 
-async function fresh_file(){
+export async function fresh_file(){
     if (currentPath) {
         fetchFiles(currentPath);
     }
 }
+
+export {fresh_file}

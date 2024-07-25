@@ -24,3 +24,20 @@ pub mod user{
         }
     }
 }
+
+pub mod init_file{
+
+    use std::{fs, io::Write};
+
+    use tauri::command;
+
+    #[command]
+    pub fn write_ini(w: String) -> Result<(),String>{
+        let ini_path = "../ini/setting.ini";
+        if let Ok(mut file) = fs::File::open(ini_path){
+            let _ = file.write_all(w.as_bytes());
+        };
+
+        Ok(())
+    }
+}

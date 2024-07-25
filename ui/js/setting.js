@@ -1,4 +1,4 @@
-var color = {};
+const { invoke } = window.__TAURI__.tauri;
 
 var rightfileValue="";
 var codeEditorValue = "";
@@ -155,3 +155,11 @@ document.getElementById("update-space-color-btn").addEventListener("click", asyn
         console.error("Error updating space color:", error);
     }
 });
+
+
+document.getElementById("default-menu").addEventListener("click",()=>{
+
+});
+
+
+export {rightfileValue,leftfileValue,menuValue,codeEditorValue,footerValue,terimalValue}

@@ -1,4 +1,6 @@
 const {appWindow} = window.__TAURI__.window;
+import "./setting"
+import { leftfileValue } from "./setting";
 
 // Minimize window
 document.getElementById('titlebar-minimize').addEventListener('click', () => {
@@ -54,7 +56,4 @@ document.getElementById('titlebar-background').addEventListener('click',()=>{
     isOriginalColor=!isOriginalColor; */
     change_color(rightfileValue,leftfileValue,codeEditorValue,terimalValue,menuValue,footerValue,isOriginalColor);
     isOriginalColor=!isOriginalColor;
-    console.log(rightfileValue);
-
 })
-
