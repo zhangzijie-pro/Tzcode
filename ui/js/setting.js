@@ -160,6 +160,3 @@ document.getElementById("update-space-color-btn").addEventListener("click", asyn
 document.getElementById("default-menu").addEventListener("click",()=>{
 
 });
-
-
-export {rightfileValue,leftfileValue,menuValue,codeEditorValue,footerValue,terimalValue}

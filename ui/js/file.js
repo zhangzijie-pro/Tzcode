@@ -140,6 +140,12 @@ async function createTab(path, content = '') {
 
     const textareaContainer = document.createElement('div');
     textareaContainer.className = 'file-content';
+    const minimap = document.createElement('div');
+    minimap.id = 'minimap-container';
+    const canvas_minimap = document.createElement('canvas');
+    canvas_minimap.id = 'minimap';
+    minimap.appendChild(canvas_minimap)
+    textareaContainer.appendChild(minimap);
 
     const container = document.createElement('div');
     container.className = 'editor';
@@ -386,10 +392,8 @@ document.getElementById('create-dir').addEventListener('click', async () => {
     }
 });
 
-export async function fresh_file(){
+async function fresh_file(){
     if (currentPath) {
         fetchFiles(currentPath);
     }
 }
-
-export {fresh_file}

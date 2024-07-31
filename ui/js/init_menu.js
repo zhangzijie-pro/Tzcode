@@ -1,5 +1,4 @@
 const { invoke } = window.__TAURI__.tauri;
-import { fresh_file } from "./file";
 
 let currentPath = "";
 let config = {
