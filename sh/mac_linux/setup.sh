@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: create dir with Tiks
+
 # 获取用户主目录路径
 HOME_DIR="$HOME"
 

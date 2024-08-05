@@ -1,14 +1,3 @@
-json_folder = r"../space"
+#  插件内容
 
-
-def read_workspace():
-    pass
-
-def write_worksapce(path):
-    pass
-
-def read_work_setting():
-    pass
-
-def self_setting(json):
-    pass
+# 计算机
