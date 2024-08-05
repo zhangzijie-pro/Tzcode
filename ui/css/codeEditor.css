@@ -58,3 +58,33 @@
 
 
 /* minimap */
+
+#minimap-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 150px; /* Adjust the width as necessary */
+    height: auto;
+    max-height: 200px; /* Adjust the height as necessary */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    overflow: hidden;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.minimap {
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+}
+
+canvas.minimap {
+    width: 100%;
+}
+
+.minimap p {
+    font-size: 10px; /* Smaller text size */
+    color: #141010;
+    line-height: 1.2;
+}

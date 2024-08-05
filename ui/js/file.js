@@ -142,8 +142,13 @@ async function createTab(path, content = '') {
     textareaContainer.className = 'file-content';
     const minimap = document.createElement('div');
     minimap.id = 'minimap-container';
+    minimap.className = "minimap";
     const canvas_minimap = document.createElement('canvas');
     canvas_minimap.id = 'minimap';
+    canvas_minimap.className = 'minimap';
+    const content_minimap = document.createElement('p');
+    content_minimap.textContent = content;
+    canvas_minimap.appendChild(content_minimap);
     minimap.appendChild(canvas_minimap)
     textareaContainer.appendChild(minimap);
 

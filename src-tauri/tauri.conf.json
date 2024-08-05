@@ -60,7 +60,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": ["../py/server.py","../space","../tiks_command"],
+      "resources": ["../py/server.py","../space","../tiks_command","../ini/setting.ini","../sh/window"],
       "shortDescription": "",
       "targets": "all",
       "windows": {
