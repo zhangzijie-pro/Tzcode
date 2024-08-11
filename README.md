@@ -1,6 +1,9 @@
 # Tzcode
 
-## 更新中，现只支持Windows
+## !!!
+## 最近学习C++,后续更新计划： 先上传c++写的跨平台文件同步工具，然后嵌套如Tzcode中 (预计10月前继续更新Tzcode)
+
+## 目前仅支持编辑文件和使用Tiks命令行等基础操作
 
 终端命令来自于[**Tiks**](https://github.com/zhangzijie-pro/Tiks.git)
 命令解释说明可见于Tiks的[readme.md](./tiks_command/explain.md)
