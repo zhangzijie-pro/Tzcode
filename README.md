@@ -1,8 +1,5 @@
 # Tzcode
 
-## !!!
-## 最近学习C++,后续更新计划： 先上传c++写的跨平台文件同步工具，然后嵌套入Tzcode中 (预计10月前继续更新Tzcode)
-
 ## 目前仅支持编辑文件和使用Tiks命令行等基础操作
 
 终端命令来自于[**Tiks**](https://github.com/zhangzijie-pro/Tiks.git)
@@ -21,12 +18,19 @@ webview的框架是[**tauri**](https://tauri.app/zh-cn/v1/guides/)
 ## 使用技术
 
 - **Rust**：用于核心功能和性能。
-- **Tauri**：用于创建跨平台桌面应用程序。
+- **Tauri V1.0**：用于创建跨平台桌面应用程序。
 - **Python**：用于脚本和扩展编辑器功能。
 
 ## 本地运行
 ### [环境搭建](./set_env.md)
 ```sh
+download python and rust 
+
+SET_ENV:
+    cargo install tauri-cli
+    pip install flask flask_cors
+    cd src_tauri
+
 RUN:
     cargo tauri dev
 ```

@@ -115,3 +115,8 @@
     border-bottom: 1px solid #eee;
     cursor: pointer;
 }
+
+.rightmenu {
+    font-size: smaller;
+    display: none;
+}
