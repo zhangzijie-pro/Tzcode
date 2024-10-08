@@ -140,17 +140,6 @@ async function createTab(path, content = '') {
 
     const textareaContainer = document.createElement('div');
     textareaContainer.className = 'file-content';
-    const minimap = document.createElement('div');
-    minimap.id = 'minimap-container';
-    minimap.className = "minimap";
-    const canvas_minimap = document.createElement('canvas');
-    canvas_minimap.id = 'minimap';
-    canvas_minimap.className = 'minimap';
-    const content_minimap = document.createElement('p');
-    content_minimap.textContent = content;
-    canvas_minimap.appendChild(content_minimap);
-    minimap.appendChild(canvas_minimap)
-    textareaContainer.appendChild(minimap);
 
     const container = document.createElement('div');
     container.className = 'editor';
@@ -402,3 +391,92 @@ async function fresh_file(){
         fetchFiles(currentPath);
     }
 }
+
+
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    showMenu(e);
+});
+
+
+const ContextMenu = function (options) {
+    let instance;
+  
+    function createMenu() {
+      const ul = document.createElement("ul");
+      ul.classList.add("custom-context-menu");
+      const { menus } = options;
+      if (menus && menus.length > 0) {
+        for (let menu of menus) {
+          const li = document.createElement("li");
+          li.textContent = menu.name;
+          li.onclick = menu.onClick;
+          ul.appendChild(li);
+        }
+      }
+      const body = document.querySelector("body");
+      body.appendChild(ul);
+      return ul;
+    }
+  
+    return {
+      getInstance: function () {
+        if (!instance) {
+          instance = createMenu();
+        }
+        return instance;
+      },
+    };
+  };
+  
+  const contextMenu = ContextMenu({
+    menus: [
+      {
+        name: "新建文件",
+        onClick: function (e) {
+          console.log("menu1 clicked");
+        },
+      },
+      {
+        name: "新建文件夹",
+        onClick: function (e) {
+          console.log("menu2 clicked");
+        },
+      },
+      {
+        name: "复制",
+        onClick: function (e) {
+          console.log("menu3 clicked");
+        },
+      },
+      {
+        name: "粘贴",
+        onClick: function (e) {
+          console.log("menu3 clicked");
+        },
+      },
+      {
+        name: "刷新",
+        onClick: function (e) {
+            fresh_file()
+        },
+      },
+    ],
+  });
+  
+  function showMenu(e) {
+    e.preventDefault();
+    const menus = contextMenu.getInstance();
+    menus.style.top = `${e.clientY}px`;
+    menus.style.left = `${e.clientX}px`;
+    menus.classList.remove("hidden");
+  }
+  
+  function hideMenu(event) {
+    const menus = contextMenu.getInstance();
+    menus.classList.add("hidden");
+  }
+  
+  document.addEventListener("contextmenu", showMenu);
+  document.addEventListener("click", hideMenu);
+  
