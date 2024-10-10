@@ -86,35 +86,6 @@
                 </div>
             </div>
             <div class="right-file">
-                <div class="rightmenu" id = "right_menu">
-                    <ul>
-                        <li>
-                            <div class = "" id="create-file">
-                                <p>新建文件</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class = "" id="create-dir">
-                                <p>新建文件夹</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class = "" id="delete_file">
-                                <p>删除</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class = "" id="copy_file">
-                                <p>复制</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class = "" id="paste_file">
-                                <p>粘贴</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
                 <ul id="fileList" class="file-size">
                     <!-- Files will be populated here -->
                 </ul>
@@ -126,7 +97,23 @@
                 </div>
                 <div id="user_send" style="display: none;">
                     <div>
-                        <span>还未更新...尽情等待</span>
+                        <div class="user-self">
+                            <img src="./svg/user_self.svg">
+                            <span>User</span>
+                        </div>
+                        <div class="user-email" id="user-email">
+                            <span>
+                                <!-- user email show here -->
+                            </span>
+                        </div>
+                        <ul id="user-friend" class="user-friend">
+                            <!-- 联系人 -->
+                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                        </ul>
+                        <div class="send_message">
+                            <input type="text" id="send_message" placeholder="input your message to send">
+                            <button>发送</button>
+                        </div>
                     </div>
                 </div>
             </div>

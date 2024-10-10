@@ -26,15 +26,20 @@ pub mod user{
 }
 
 pub mod init_file{
-
     use std::{fs, io::Write};
 
     use tauri::command;
 
+    use super::USER_FILE;
+
     #[command]
     pub fn write_ini(w: String) -> Result<(),String>{
         let ini_path = "../ini/setting.ini";
+        let user_tiks_path = USER_FILE.as_str();
+        let binding = fs::read(user_tiks_path).unwrap();
+        let user_msg = binding.as_slice();
         if let Ok(mut file) = fs::File::open(ini_path){
+            let _ = file.write(user_msg);
             let _ = file.write_all(w.as_bytes());
         };
 
