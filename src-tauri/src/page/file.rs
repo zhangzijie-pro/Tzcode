@@ -123,6 +123,9 @@ pub fn get_file_language(filename:String) -> String{
 #[command]
 #[allow(non_snake_case)]
 pub fn create_file(fileName: String) -> Result<(), String> {
+    if(fileName.is_empty()||fileName=="null"){
+        return Err("expect an vailed value".to_string());
+    }
     match File::create(Path::new(&fileName)) {
         Ok(_) => Ok(()),
         Err(e) => Err(format!("Failed to create file: {}", e)),

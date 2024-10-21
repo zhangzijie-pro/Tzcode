@@ -350,11 +350,13 @@ function updateFooterLanguage(language) {
 document.addEventListener('DOMContentLoaded', async()=>readWorkspaceConfig());
 
 
-
-// create file
-document.getElementById('create-file').addEventListener('click', async () => {
+async function create_file(){
     const filename = prompt('Please enter the file name:');
     const fileName = current_folder+"\\"+filename;
+    if(filename==null){
+        alert('File name cannot be empty!');
+        fileName="";
+    }
     if (fileName) {
         try {
             await invoke('create_file', { fileName });
@@ -367,11 +369,15 @@ document.getElementById('create-file').addEventListener('click', async () => {
     } else {
         alert('File name cannot be empty!');
     }
-});
+}
 
-document.getElementById('create-dir').addEventListener('click', async () => {
+async function create_dir() {
     const filename = prompt('Please enter the folder name:');
     const fileName = current_folder+filename;
+    if(filename==null){
+        alert('File name cannot be empty!');
+        fileName = "";
+    }
     if (fileName) {
         try {
             await invoke('create_dir', { fileName });
@@ -384,6 +390,15 @@ document.getElementById('create-dir').addEventListener('click', async () => {
     } else {
         alert('File name cannot be empty!');
     }
+}
+
+// create file
+document.getElementById('create-file').addEventListener('click', async () => {
+    create_file();
+});
+
+document.getElementById('create-dir').addEventListener('click', async () => {
+    create_dir();
 });
 
 async function fresh_file(){
@@ -401,81 +416,81 @@ document.addEventListener("contextmenu", (e) => {
 
 const ContextMenu = function (options) {
     let instance;
-  
+
     function createMenu() {
-      const ul = document.createElement("ul");
-      ul.classList.add("custom-context-menu");
-      const { menus } = options;
-      if (menus && menus.length > 0) {
-        for (let menu of menus) {
-          const li = document.createElement("li");
-          li.textContent = menu.name;
-          li.onclick = menu.onClick;
-          ul.appendChild(li);
-        }
-      }
-      const body = document.querySelector("body");
-      body.appendChild(ul);
-      return ul;
+    const ul = document.createElement("ul");
+    ul.classList.add("custom-context-menu");
+    const { menus } = options;
+    if (menus && menus.length > 0) {
+    for (let menu of menus) {
+        const li = document.createElement("li");
+        li.textContent = menu.name;
+        li.onclick = menu.onClick;
+        ul.appendChild(li);
     }
-  
+    }
+    const body = document.querySelector("body");
+    body.appendChild(ul);
+    return ul;
+    }
+
     return {
-      getInstance: function () {
+        getInstance: function () {
         if (!instance) {
-          instance = createMenu();
+            instance = createMenu();
         }
         return instance;
-      },
+        },
     };
-  };
+};
   
-  const contextMenu = ContextMenu({
+const contextMenu = ContextMenu({
     menus: [
-      {
+        {
         name: "新建文件",
         onClick: function (e) {
-          console.log("menu1 clicked");
+            create_file();
         },
-      },
-      {
+        },
+        {
         name: "新建文件夹",
         onClick: function (e) {
-          console.log("menu2 clicked");
+            create_dir();
         },
-      },
-      {
+        },
+        {
         name: "复制",
         onClick: function (e) {
-          console.log("menu3 clicked");
+            console.log("menu3 clicked");
         },
-      },
-      {
+        },
+        {
         name: "粘贴",
         onClick: function (e) {
-          console.log("menu3 clicked");
+            console.log("menu3 clicked");
         },
-      },
-      {
+        },
+        {
         name: "刷新",
         onClick: function (e) {
             fresh_file()
         },
-      },
+        },
     ],
-  });
+});
   
-  function showMenu(e) {
-    e.preventDefault();
-    const menus = contextMenu.getInstance();
-    menus.style.top = `${e.clientY}px`;
-    menus.style.left = `${e.clientX}px`;
-    menus.classList.remove("hidden");
-  }
+function showMenu(e) {
+e.preventDefault();
+const menus = contextMenu.getInstance();
+menus.style.top = `${e.clientY}px`;
+menus.style.left = `${e.clientX}px`;
+menus.classList.remove("hidden");
+}
   
-  function hideMenu(event) {
-    const menus = contextMenu.getInstance();
-    menus.classList.add("hidden");
-  }
+function hideMenu(event) {
+const menus = contextMenu.getInstance();
+menus.classList.add("hidden");
+}
   
   document.addEventListener("contextmenu", showMenu);
   document.addEventListener("click", hideMenu);
