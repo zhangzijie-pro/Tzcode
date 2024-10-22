@@ -177,44 +177,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await updateActivePath();
 });
 
-let historyStack = [];
-let redoStack = [];
-
-function addAction(action) {
-    // 添加操作到历史栈
-    historyStack.push(action);
-    // 清空重做栈
-    redoStack = [];
-    // 更新结果显示
-    updateResultArea(action);
+async function plugin_catular(){
+    await invoke("run_plugin");
 }
-
-function updateResultArea(action) {
-    const resultArea = document.getElementById('fileList');
-    resultArea.innerText += `${action}\n`;
-}
-
-function undo() {
-    if (historyStack.length > 0) {
-        const lastAction = historyStack.pop();
-        redoStack.push(lastAction); // 将撤销的操作推入重做栈
-        updateResultArea(`撤销: ${lastAction}`);
-    } else {
-        alert('没有可以撤销的操作');
-    }
-}
-
-function redo() {
-    if (redoStack.length > 0) {
-        const lastRedoAction = redoStack.pop();
-        historyStack.push(lastRedoAction); // 将重做的操作推入历史栈
-        updateResultArea(`重做: ${lastRedoAction}`);
-    } else {
-        alert('没有可以重做的操作');
-    }
-}
-
-// 示例：添加操作
-addAction('操作1');
-addAction('操作2');
-addAction('操作3');

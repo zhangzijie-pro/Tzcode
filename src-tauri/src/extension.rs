@@ -68,3 +68,15 @@ pub fn get_files_with_pattern(origin_path: String, pattern: String) -> Result<Ve
 
     Ok(result)
 }
+
+use std::process::Command;
+// 运行地址
+const CALUTE_EXE:&str = "../plugin/caluter.exe";
+
+#[command]
+pub fn run_plugin(){
+    let output = Command::new(CALUTE_EXE)
+    .output()
+    .expect("Error: Can't run this plugin");
+
+}

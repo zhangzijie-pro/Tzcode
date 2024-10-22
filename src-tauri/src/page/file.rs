@@ -131,7 +131,7 @@ pub fn create_file(fileName: String) -> Result<(), String> {
         Err(e) => Err(format!("Failed to create file: {}", e)),
     }
 }
-
+/* 对于我写的rust的tauri，如何向其中嵌套一个我之前的exe文件，在前端按钮点击时，可以运行这个exe文件 */
 #[command]
 #[allow(non_snake_case)]
 pub fn create_dir(fileName: String) -> Result<(),String>{
