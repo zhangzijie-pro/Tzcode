@@ -11,12 +11,14 @@ task:
     5. add button to toggle background-color -> Done!
     12. update this app    -> Done!
     14. create file error   -> Done!
-    
-    15. right mouse menu
+    15. right mouse menu    -> Done!
+
     16. user communication
     17. python file pack
     18. minimap
-
+    19. calutate exe in json and plugin
+    20.FileSyncTool : Run Server   <------->  button   -> Client
+    
 
 bug: 
     1. Can not show png ...picture           -> bug Canel..

@@ -199,7 +199,7 @@ function closeTab(filename) {
     }
 }
 
-// 更新x为。
+// 是否修改变化tab标识符
 function updateTabCloseButton(filename, isModified) {
     const { closeButton } = openFiles[filename];
     if (isModified) {
@@ -478,7 +478,7 @@ const contextMenu = ContextMenu({
         },
     ],
 });
-  
+  w
 function showMenu(e) {
 e.preventDefault();
 const menus = contextMenu.getInstance();
